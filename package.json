@@ -1,0 +1,24 @@
+{
+  "name": "webplatform-framework",
+  "version": "0.0.1",
+  "description": "The webview interface to qnx internal functions",
+  "repository": "git://github.com/blackberry-webworks/webplatform-framework.git",
+  "author": {
+    "name": "Research In Motion",
+    "url": "http://github.com/blackberry-webworks/webplatform-framework"
+  },
+  "licenses": [{
+    "type": "Apache 2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0"
+  }],
+    "dependencies": {
+    "jasmine-node": "1.0.7",
+    "jWorkflow": "*"
+  },
+  "files": [
+    "node_modules",
+    "README.md",
+    "LICENSE",
+    "lib"
+  ]
+}
