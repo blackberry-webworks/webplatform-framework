@@ -21,10 +21,10 @@ var childProcess = require("child_process"),
 
 function _done(error) {
     if (error) {
-        util.puts("BBX-Framework BUILD FAILED:\n" + error);
+        util.puts("webplatform-framework BUILD FAILED:\n" + error);
         process.exit(1);
     } else {
-        util.puts("BBX-Framework BUILD SUCCESS");
+        util.puts("webplatform-framework BUILD SUCCESS");
         process.exit();
     }
 }
