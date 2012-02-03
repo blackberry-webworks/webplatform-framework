@@ -44,32 +44,13 @@ function _copyCmd(source, destination) {
 function _copyFiles() {
     var cmdSep = " && ";
     return  _copyCmd(_c.LIB, 'lib') + cmdSep +
-            _copyCmd(_c.BIN, 'bin') + cmdSep +
-            _copyCmd(_c.EXT, 'ext') + cmdSep +
-            _copyCmd(_c.CLIENTFILES, 'clientFiles') + cmdSep +
-            _copyCmd(_c.NODE_MOD, 'node_modules') + cmdSep +
-            _copyCmd(_c.DEPENDENCIES_EMU_LIB, 'dependencies/BBX-Emulator/lib') + cmdSep +
-            _copyCmd(_c.DEPENDENCIES_BOOTSTRAP, 'dependencies/bootstrap') + cmdSep +
             _copyCmd(_c.ROOT + 'README.md', '') + cmdSep +
             _copyCmd(_c.ROOT + 'LICENSE', '');
 
 }
 
-function _deleteFolderCmd(folderpath) {
-    var unix_path = (_c.DEPLOY + folderpath).replace(/([^\/]*)$/, '');
-    if (utils.isWindows()) {
-        return 'rmdir /S /Q ' + path.normalize(_c.DEPLOY + folderpath);
-    } else {
-        return 'rm -rf ' + unix_path;
-    }
-}
-
-function _deleteFilesFromTarget() {
-    return  _deleteFolderCmd('lib/public');
-}
-
 function _processFiles() {
-    return _copyFiles() + ' && ' + _deleteFilesFromTarget();
+    return _copyFiles();
 }
 
 module.exports = function (src, baton) {
