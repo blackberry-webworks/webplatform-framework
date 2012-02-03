@@ -1,0 +1,1 @@
+java -jar dependencies/jsdoc_toolkit-2.4.0/jsdoc-toolkit/jsrun.jar dependencies/jsdoc_toolkit-2.4.0/jsdoc-toolkit/app/run.js -a -p "lib/" -t=dependencies/jsdoc_toolkit-2.4.0/jsdoc-toolkit/templates/jsdoc/ -d="docs"

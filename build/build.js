@@ -41,7 +41,8 @@ function _handle(func) {
 
 module.exports = _handle(function () {
     var build = jWorkflow.order(clean)
-                         .andThen(pack);
+                         .andThen(pack)
+                         .andThen(docs);
 
     build.start(function (error) {
         _done(error);
