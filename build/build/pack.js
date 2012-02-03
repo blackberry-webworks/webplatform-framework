@@ -49,10 +49,6 @@ function _copyFiles() {
 
 }
 
-function _deleteFilesFromTarget() {
-    return  _deleteFolderCmd('lib/public');
-}
-
 function _processFiles() {
     return _copyFiles();
 }
