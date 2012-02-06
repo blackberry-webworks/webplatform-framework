@@ -22,6 +22,7 @@ module.exports = {
     BUILD: path.normalize(__dirname + "/.."),
     LIB: path.normalize(__dirname + "/../../lib"),
     BIN: path.normalize(__dirname + "/../../bin"),
+    DOCS: path.normalize(__dirname + "/../../docs"),
     DEPENDENCIES: path.normalize(__dirname + "/../../dependencies"),
     DEPENDENCIES_EMU_LIB: path.normalize(__dirname + "/../../dependencies/BBX-Emulator/lib"),
     DEPENDENCIES_BOOTSTRAP: path.normalize(__dirname + "/../../dependencies/bootstrap"),

@@ -1,19 +1,11 @@
 # WebPlatform Framework APIS
 ## Build
 1. Run the configuration script (./configure or configure.bat)
+
+2. Call jake
+
 ## Docs
-### Manual Build
-#### Setting up your Environment
-1. Download the [jsdoc-toolkit](http://code.google.com/p/jsdoc-toolkit/downloads/list)
-
-2. Extract the contents of the downloaded jsdoc zip into the dependencies folder
-
-3. The WebWorks API Docs repo should already be in your dependencies folder (if you have configured)
-
-4. If you don't already have one, download and configure a [Java Runtime Environment] (http://www.oracle.com/technetwork/java/javase/downloads/index.html) on your machine
-
-### Building the Documentation
-1. Run the genDocs.sh script (Sorry Windows :()
+1. Docs are automatically generated using jsDocs when you call jake. They can be found in the docs folder.
 
 ## Viewing the Documentation
 After you have generated the documentation you will find all the HTML for the API docs in your docs folder

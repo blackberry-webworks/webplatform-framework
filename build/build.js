@@ -17,7 +17,8 @@ var childProcess = require("child_process"),
     util = require("util"),
     jWorkflow = require("jWorkflow"),
     clean = require("./build/clean"),
-    pack = require("./build/pack");
+    pack = require("./build/pack"),
+    docs = require("./build/docs");
 
 function _done(error) {
     if (error) {
