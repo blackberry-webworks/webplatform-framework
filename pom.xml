@@ -1,34 +1,82 @@
 <project>
     <groupId>net.rim.BB10webworks</groupId>
-    <artifactId>WebPlatform</artifactId>
+    <artifactId>WebPlatform-Framework</artifactId>
     <version>1.0.0.0</version>
     <name>${project.artifactId}-${project.version}</name>
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
 
+    <profiles>
+        <profile>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>configure</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>configure.bat</executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugin>
+            </build>    
+        </profile>
+        <profile>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>configure</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>sudo</executable>
+                                    <arguments>
+                                        <argument>./configure</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugin>
+            </build>
+        </profile>
+    </profiles>
+    
     <build>
         <directory>target</directory>
-        <finalName>BB10-WebPlatform</finalName>
-
+        <finalName>WebPlatform-Framework</finalName>        
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.1.1</version>
                 <executions>
-                    <execution>
-                        <id>configure</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>sudo</executable>
-                            <arguments>
-                                <argument>./configure</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>jake-test</id>
                         <phase>package</phase>
@@ -57,6 +105,23 @@
                             <workingDirectory></workingDirectory>            
                             <arguments>
                                 <argument>lint</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>jake-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>jake</executable>
+                            <workingDirectory></workingDirectory>            
+                            <arguments>
+                                <argument>build</argument>
                             </arguments>
                             <successCodes>
                                 <successCode>0</successCode>
