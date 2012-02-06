@@ -17,8 +17,11 @@
 desc("runs jake build");
 task('default', [], require('./build/build'));
 
-desc("package framework - jake build");
+desc("packages the framework and builds the docs - jake build");
 task('build', [], require('./build/build'));
+
+desc("just builds the docs - jake docs");
+task('docs', [], require('./build/build/docs'));
 
 desc("run all tests in node - jake test [path,path2]");
 task('test', [], function () {

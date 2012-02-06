@@ -9,3 +9,6 @@ tags
 *.*~
 *.swp
 www/*
+docs/
+dependencies/
+target/
