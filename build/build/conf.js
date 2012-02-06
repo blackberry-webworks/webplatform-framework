@@ -20,12 +20,15 @@ module.exports = {
     DEPLOY: path.normalize(__dirname + "/../../target/zip/"),
     TARGET: path.normalize(__dirname + "/../../target/"),
     BUILD: path.normalize(__dirname + "/.."),
-    CLIENTFILES: path.normalize(__dirname + "/../../clientFiles"),
     LIB: path.normalize(__dirname + "/../../lib"),
     BIN: path.normalize(__dirname + "/../../bin"),
-    EXT: path.normalize(__dirname + "/../../ext"),
+    DOCS: path.normalize(__dirname + "/../../docs"),
     DEPENDENCIES: path.normalize(__dirname + "/../../dependencies"),
     DEPENDENCIES_EMU_LIB: path.normalize(__dirname + "/../../dependencies/BBX-Emulator/lib"),
     DEPENDENCIES_BOOTSTRAP: path.normalize(__dirname + "/../../dependencies/bootstrap"),
+    DEPENDENCIES_JSDOC: path.normalize(__dirname + "/../../dependencies/jsdoc_toolkit-2.4.0/jsdoc-toolkit/"),
+    DEPENDENCIES_JSDOC_ZIP: path.normalize(__dirname + "/../../dependencies/jsdoc_toolkit-2.4.0.zip"),
+    DEPENDENCIES_JSDOC_URL: "http://jsdoc-toolkit.googlecode.com/files/jsdoc_toolkit-2.4.0.zip",
+    DEPENDENCIES_APIDOCS: path.normalize(__dirname + "/../../dependencies/WebWorks-API-Docs/"),
     NODE_MOD: path.normalize(__dirname + "/../../node_modules")
 };
