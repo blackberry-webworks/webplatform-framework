@@ -53,7 +53,7 @@ describe("webviewFactory", function () {
         var webview = webviewFactory.create(),
             jsExpression = "var a = 'awesome';",
             callback = function () {
-                webview.prototype.executeJavascript(jsExpression);
+                webview.prototype.executeJavaScript(jsExpression);
             }; 
         webview.prototype.create(callback);
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.executeJavaScript", jasmine.any(Number), jsExpression, false);
