@@ -5,7 +5,16 @@
 2. Call jake
 
 ## Docs
-1. Docs are automatically generated using jsDocs when you call jake. They can be found in the docs folder.
+
+#### Setting up your Environment
+1. Download the [jsdoc-toolkit](http://code.google.com/p/jsdoc-toolkit/downloads/list)
+
+2. Extract the contents of the downloaded jsdoc zip into the dependencies folder
+
+3. If you don't already have one, download and configure a [Java Runtime Environment] (http://www.oracle.com/technetwork/java/javase/downloads/index.html) on your machine
+
+### Building the Documentation
+1. The docs are automatically created in the build process (jake build). You can also specifically build them by calling jake docs
 
 ## Viewing the Documentation
 After you have generated the documentation you will find all the HTML for the API docs in your docs folder
