@@ -1,8 +1,12 @@
 # WebPlatform Framework APIS
-## Build
-1. Run the configuration script (./configure or configure.bat)
 
-2. Call jake
+## Building with maven
+
+1. Download and install [maven](http://maven.apache.org/download.html)
+
+2. Run the command:
+
+        $ mvn install
 
 ## Docs
 
