@@ -8,29 +8,29 @@ var fs = require('fs'),
 
 
 function _getJSDocToolkit(callback) {
-    var jsdoc_url = url.parse(_c.DEPENDENCIES_JSDOC_URL)
+    var jsdoc_url, req;
+    jsdoc_url = url.parse(_c.DEPENDENCIES_JSDOC_URL);
     
-    var req = http.get({'host': jsdoc_url.host, 'path': jsdoc_url.pathname}, function (res) {
+    req = http.get({'host': jsdoc_url.host, 'path': jsdoc_url.pathname}, function (res) {
         var stream = fs.createWriteStream(_c.DEPENDENCIES_JSDOC_ZIP);
         res.pipe(stream);
-        res.on('end', function() {
-            console.log('done');
+        res.on('end', function () {
             callback();
         });
-    }).on('error', function(e) {
+    }).on('error', function (e) {
         throw (new Error("JSDocs Unable to Download ..."));
     });
 
-    req.on('error', function(e) {
-      console.log('Problem with request: ' + e.message);
+    req.on('error', function (e) {
+        throw (new Error('Problem with request: ' + e.message));
     });
 }
 
 function _exractJSDocToolkit(callback) {
-    var data, filesObj, p, parent;
-    var from = _c.DEPENDENCIES_JSDOC_ZIP;
-    var to = _c.DEPENDENCIES;
-    var exists = path.existsSync(from);
+    var data, filesObj, p, parent, from, to, exists;
+    from = _c.DEPENDENCIES_JSDOC_ZIP;
+    to = _c.DEPENDENCIES;
+    exists = path.existsSync(from);
 
     if (exists) {
         data = fs.readFileSync(from);
