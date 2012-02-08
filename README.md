@@ -27,6 +27,8 @@
 ## Viewing the Documentation
 After you have generated the documentation you will find all the HTML for the API docs in your docs folder
 
+The documentation can also be viewed online on github at this [link](http://blackberry-webworks.github.com/webplatform-framework/index.html).
+
 ## Additional Information
 
 ### About the jsdoc-toolkit open source project
