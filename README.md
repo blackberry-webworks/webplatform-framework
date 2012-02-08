@@ -1,8 +1,16 @@
 # WebPlatform Framework APIS
-## Build
+
+## Build with jake
 1. Run the configuration script (./configure or configure.bat)
 
 2. Call jake
+
+## Building with maven
+1. Download and install [maven](http://maven.apache.org/download.html)
+
+2. Run the command:
+
+        $ mvn install
 
 ## Docs
 
@@ -18,6 +26,8 @@
 
 ## Viewing the Documentation
 After you have generated the documentation you will find all the HTML for the API docs in your docs folder
+
+The documentation can also be viewed online on github at this [link](http://blackberry-webworks.github.com/webplatform-framework/index.html).
 
 ## Additional Information
 
