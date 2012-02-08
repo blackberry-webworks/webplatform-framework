@@ -43,7 +43,7 @@ function _exractJSDocToolkit(callback) {
         throw (new Error("JSDocs .zip is Missing ..."));
     }
 
-    if (exists_dir) {
+    if (!exists_dir) {
         data = fs.readFileSync(_c.DEPENDENCIES_JSDOC_ZIP);
         filesObj = zip.Reader(data).toObject("utf-8");
 
