@@ -7,7 +7,18 @@ var fs = require('fs'),
     _c = require('./build/conf');
 
 
-function _getJSDocToolkit(callback) {
+
+function createDependenciesDir(andThen) {
+    var dependencyDirExists = path.existsSync(_c.DEPENDENCIES);
+    if (!dependencyDirExists) {
+        fs.mkdir(_c.DEPENDENCIES, "0755", andThen);
+    } else {
+        andThen();
+    }
+
+}
+
+function downloadJSDocToolkit(callback) {
     var jsdoc_url, 
         req, 
         exists = path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP);
@@ -33,7 +44,7 @@ function _getJSDocToolkit(callback) {
     }
 }
 
-function extractJSDocToolkit(callback) {
+function extractJSDocToolkit() {
     var data, 
         filesObj, 
         p, 
@@ -71,6 +82,10 @@ function extractJSDocToolkit(callback) {
     }
 }
 
-module.exports = function () {
-    _getJSDocToolkit(extractJSDocToolkit);
-};
+function _extractJSDocs() {
+    createDependenciesDir(function () {
+        downloadJSDocToolkit(extractJSDocToolkit);
+    });
+}
+
+module.exports = _extractJSDocs;
