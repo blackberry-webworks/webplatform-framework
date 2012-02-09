@@ -27,7 +27,7 @@ function _getJSDocCommand() {
         ghostFile = path.resolve(__dirname + '/ghost.txt');
         ghostFileStr = fs.readFileSync(ghostFile, "ASCII");
         console.log(ghostFileStr);
-        throw (new Error("JSDocs is Missing ..."));
+        throw (new Error("JSDocs is Missing, Please run 'jake configure' before build ..."));
     }
 
     jsDocsCommand = "java " +
@@ -39,14 +39,13 @@ function _getJSDocCommand() {
         "-d=" + _c.DOCS;
     
     return jsDocsCommand;
-
 }
 
 module.exports = function (src, baton) {
     if (baton) {
         baton.take();
     }
-
+    
     childProcess.exec(_getJSDocCommand(), function (error, stdout, stderr) {
         if (error) {
             console.log(stdout);
@@ -61,5 +60,4 @@ module.exports = function (src, baton) {
         }
         _done(error);
     });
-  
 };
