@@ -7,12 +7,21 @@ var fs = require('fs'),
     _c = require('./build/conf');
 
 
-function _getJSDocToolkit(callback) {
-    var jsdoc_url, 
-        req, 
-        exists = path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP);
 
-    if (!exists) {
+function createDependenciesDir(andThen) {
+    if (!path.existsSync(_c.DEPENDENCIES)) {
+        fs.mkdir(_c.DEPENDENCIES, "0755", andThen);
+    } else {
+        andThen();
+    }
+
+}
+
+function downloadJSDocToolkit(callback) {
+    var jsdoc_url, 
+        req;
+
+    if (!path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP)) {
         jsdoc_url = url.parse(_c.DEPENDENCIES_JSDOC_URL);
         
         req = http.get({'host': jsdoc_url.host, 'path': jsdoc_url.pathname}, function (res) {
@@ -33,24 +42,18 @@ function _getJSDocToolkit(callback) {
     }
 }
 
-function extractJSDocToolkit(callback) {
+function extractJSDocToolkit() {
     var data, 
         filesObj, 
         p, 
         parent, 
-        to = _c.DEPENDENCIES, 
-        exists_zip, 
-        exists_dir;
-
-    exists_zip = path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP);
-
-    if (!exists_zip) {
+        to = _c.DEPENDENCIES;
+    
+    if (!path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP)) {
         throw (new Error("JSDocs .zip is Missing ..."));
     }
 
-    exists_dir = path.existsSync(_c.DEPENDENCIES_JSDOC);
-    
-    if (!exists_dir) {
+    if (!path.existsSync(_c.DEPENDENCIES_JSDOC)) {
         data = fs.readFileSync(_c.DEPENDENCIES_JSDOC_ZIP);
         filesObj = zip.Reader(data).toObject();
 
@@ -71,6 +74,10 @@ function extractJSDocToolkit(callback) {
     }
 }
 
-module.exports = function () {
-    _getJSDocToolkit(extractJSDocToolkit);
-};
+function _extractJSDocs() {
+    createDependenciesDir(function () {
+        downloadJSDocToolkit(extractJSDocToolkit);
+    });
+}
+
+module.exports = _extractJSDocs;
