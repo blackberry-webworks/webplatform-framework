@@ -17,7 +17,6 @@
 desc("runs jake build");
 task('default', [], require('./build/build'));
 
-desc("configuration - jake configure");
 task('configure', [], require('./build/configure'));
 
 desc("packages the framework and builds the docs - jake build");

@@ -8,8 +8,9 @@ var fs = require('fs'),
 
 
 function _getJSDocToolkit(callback) {
-    var jsdoc_url, req, exists;
-    exists = path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP);
+    var jsdoc_url, 
+        req, 
+        exists = path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP);
 
     if (!exists) {
         jsdoc_url = url.parse(_c.DEPENDENCIES_JSDOC_URL);
@@ -32,20 +33,26 @@ function _getJSDocToolkit(callback) {
     }
 }
 
-function _exractJSDocToolkit(callback) {
-    var data, filesObj, p, parent, to, exists_zip, exists_dir;
-    to = _c.DEPENDENCIES;
+function extractJSDocToolkit(callback) {
+    var data, 
+        filesObj, 
+        p, 
+        parent, 
+        to = _c.DEPENDENCIES, 
+        exists_zip, 
+        exists_dir;
 
     exists_zip = path.existsSync(_c.DEPENDENCIES_JSDOC_ZIP);
-    exists_dir = path.existsSync(_c.DEPENDENCIES_JSDOC);
 
     if (!exists_zip) {
         throw (new Error("JSDocs .zip is Missing ..."));
     }
 
+    exists_dir = path.existsSync(_c.DEPENDENCIES_JSDOC);
+    
     if (!exists_dir) {
         data = fs.readFileSync(_c.DEPENDENCIES_JSDOC_ZIP);
-        filesObj = zip.Reader(data).toObject("utf-8");
+        filesObj = zip.Reader(data).toObject();
 
         if (!path.existsSync(to)) {
             wrench.mkdirSyncRecursive(to, "0755");
@@ -60,12 +67,10 @@ function _exractJSDocToolkit(callback) {
             fs.writeFileSync(to + "/" + p, filesObj[p]);
         }
     } else {
-        console.log('JSDocs exists');
+        console.log('JSDocs already exists at ' + _c.DEPENDENCIES_JSDOC);
     }
 }
 
 module.exports = function () {
-    _getJSDocToolkit(function () {
-        _exractJSDocToolkit();
-    });
+    _getJSDocToolkit(extractJSDocToolkit);
 };
