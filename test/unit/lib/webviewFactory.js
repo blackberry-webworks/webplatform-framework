@@ -13,13 +13,15 @@ describe("webviewFactory", function () {
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
-        spyOn(utils, "getScreenNamespace").andReturn(mockedScreen);
         webviewFactory = require(srcPath + "webviewFactory");
     });
 
     it("can create a webview instance", function () {
         var webview = webviewFactory.create();   
         expect(webview.id).toEqual(jasmine.any(Number));
+        expect(webview.visible).toEqual(false);
+        expect(webview.active).toEqual(false);
+        expect(webview.zOrder).toEqual(jasmine.any(Number));
     });
     
     it("can create a webview instance that can call create", function () {
@@ -59,26 +61,35 @@ describe("webviewFactory", function () {
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.executeJavaScript", jasmine.any(Number), jsExpression, false);
     });
 
-    it("can create a webview instance that can be sent to the foreground", function () {
-        var webview = webviewFactory.create(),
-            callback = function () {
-                webview.prototype.foreground();
-            }; 
-        webview.prototype.create(callback);
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setVisible", jasmine.any(Number), true);
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setActive", jasmine.any(Number), true);   
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setZOrder", jasmine.any(Number), 0);   
+    it("can create a webview instance that can have its visibility changed", function () {
+        var webview = webviewFactory.create();
+        webview.visible = true;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setVisible", webview.id, true);
+        webview.visible = false;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setVisible", webview.id, false);
     });
 
-    it("can create a webview instance that can be sent to the background", function () {
-        var webview = webviewFactory.create(),
-            callback = function () {
-                webview.prototype.background();
-            }; 
-        webview.prototype.create(callback);
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setVisible", jasmine.any(Number), false);
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setActive", jasmine.any(Number), false);   
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setZOrder", jasmine.any(Number), -99);   
+    it("can create a webview instance that can have its activity changed", function () {
+        var webview = webviewFactory.create();
+        webview.active = true;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setActive", webview.id, true);
+        webview.active = false;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setActive", webview.id, false);
+    });
+    
+    it("can create a webview instance that can have it's zOrder changed", function () {
+        var webview = webviewFactory.create();
+        webview.zOrder = 0;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setZOrder", webview.id, 0);
+        webview.zOrder = -99;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setZOrder", webview.id, -99);
+    });
+
+    it("can create a webview instance that can have its geometry set", function () {
+        var webview = webviewFactory.create();
+        //Need to call using prototype for no good reason
+        webview.prototype.setGeometry(0, 0, 0, 0);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setGeometry", webview.id, 0, 0, 0, 0);
     });
 
 });
