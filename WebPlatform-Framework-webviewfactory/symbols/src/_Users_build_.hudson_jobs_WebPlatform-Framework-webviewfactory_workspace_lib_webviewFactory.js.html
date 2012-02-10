@@ -28,106 +28,129 @@
 <span class='line'> 21</span> 
 <span class='line'> 22</span> </span><span class="COMM">/**
 <span class='line'> 23</span>  * @class A javascript abstraction of the underlying webkit webview
-<span class='line'> 24</span>  */</span><span class="WHIT">
-<span class='line'> 25</span> </span><span class="NAME">Webview</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 26</span> </span><span class="WHIT">    
-<span class='line'> 27</span>     </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">screen</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.getScreenNamespace</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> 
-<span class='line'> 28</span>         </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 29</span> </span><span class="WHIT">        </span><span class="NAME">windowGroup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 30</span> </span><span class="WHIT">        </span><span class="NAME">chromeId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 31</span> </span><span class="WHIT">        </span><span class="NAME">chromeHeight</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 32</span> </span><span class="WHIT">    
-<span class='line'> 33</span>     </span><span class="NAME">Webview.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"id"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 34</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 35</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 36</span> 
-<span class='line'> 37</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 38</span>      * @param {callback} [onComplete] A callback invoked when the webview creation is completed
-<span class='line'> 39</span>      * @description Creates an underlying webview object and displays it on the screen
-<span class='line'> 40</span>      */</span><span class="WHIT"> 
-<span class='line'> 41</span>     </span><span class="NAME">Webview.prototype.create</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 42</span> </span><span class="WHIT">        
-<span class='line'> 43</span>         </span><span class="NAME">windowGroup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.applicationWindowGroup"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">chromeId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 44</span> </span><span class="WHIT">        
-<span class='line'> 45</span>         </span><span class="COMM">//Based on this commit https://github.com/chutten/browser/commit/161b3e5ad0b8e3b7aaa67dc6bfb1661a966f1163</span><span class="WHIT">
-<span class='line'> 46</span> </span><span class="WHIT">        </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parseInt</span><span class="PUNC">(</span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">'webview.create'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">windowGroup</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"InProcess"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 47</span> </span><span class="WHIT">        
-<span class='line'> 48</span>         </span><span class="NAME">this.foreground</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 49</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setGeometry"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">chromeHeight</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">screen.width</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">screen.height</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">chromeHeight</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span>  * @property {Number} id The id of the webview
+<span class='line'> 25</span>  * @property {Boolean} visible Whether the webview is currently visible
+<span class='line'> 26</span>  * @property {Boolean} active Whether the webview is currently active
+<span class='line'> 27</span>  * @property {Number} zOrder The zOrder of the webview
+<span class='line'> 28</span>  */</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="NAME">Webview</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">    
+<span class='line'> 31</span>     </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">        </span><span class="NAME">windowGroup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">        </span><span class="NAME">chromeId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">        </span><span class="NAME">visible</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">        </span><span class="NAME">active</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">        </span><span class="NAME">zOrder</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">99</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">    
+<span class='line'> 38</span>     </span><span class="NAME">Webview.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"id"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> 
+<span class='line'> 42</span> </span><span class="WHIT">    </span><span class="NAME">Webview.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"visible"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">visible</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">    
+<span class='line'> 46</span>     </span><span class="NAME">Webview.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"visible"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">newVisibility</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">        </span><span class="NAME">visible</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">newVisibility</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setVisible"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">visible</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 50</span> 
-<span class='line'> 51</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 52</span> </span><span class="WHIT">            </span><span class="NAME">onComplete</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 53</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 55</span> 
-<span class='line'> 56</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 57</span>      * @description Sets the webview to visible, active and ZOrdered
-<span class='line'> 58</span>      */</span><span class="WHIT"> 
-<span class='line'> 59</span>     </span><span class="NAME">Webview.prototype.foreground</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 60</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setVisible"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 61</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setActive"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 62</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setZOrder"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 63</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 64</span> 
-<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 66</span>      * @description Disables the webview's visibility, activity and ZOrderedness
-<span class='line'> 67</span>      */</span><span class="WHIT"> 
-<span class='line'> 68</span>     </span><span class="NAME">Webview.prototype.background</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 69</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setVisible"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 70</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setActive"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setZOrder"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">99</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 72</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 73</span> 
-<span class='line'> 74</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 75</span>      * @description Destroys the underlying native webview
-<span class='line'> 76</span>      * @param {callback} [onComplete] A callback to be invoked when the destruction call is complete
-<span class='line'> 77</span>      */</span><span class="WHIT"> 
-<span class='line'> 78</span>     </span><span class="NAME">Webview.prototype.destroy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 79</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.destroy"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 80</span> </span><span class="WHIT">        
-<span class='line'> 81</span>         </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">    </span><span class="NAME">Webview.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"active"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">active</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">    
+<span class='line'> 55</span>     </span><span class="NAME">Webview.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"active"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">newActivity</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">        </span><span class="NAME">active</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">!</span><span class="NAME">newActivity</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setActive"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">active</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">    
+<span class='line'> 60</span>     </span><span class="NAME">Webview.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"zOrder"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">zOrder</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">    
+<span class='line'> 64</span>     </span><span class="NAME">Webview.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"zOrder"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">newZOrder</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">        </span><span class="NAME">zOrder</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parseInt</span><span class="PUNC">(</span><span class="NAME">newZOrder</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setZOrder"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">zOrder</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> 
+<span class='line'> 69</span> 
+<span class='line'> 70</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 71</span>      * @param {callback} [onComplete] A callback invoked when the webview creation is completed
+<span class='line'> 72</span>      * @description Creates an underlying webview object and displays it on the screen
+<span class='line'> 73</span>      */</span><span class="WHIT"> 
+<span class='line'> 74</span>     </span><span class="NAME">Webview.prototype.create</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">        
+<span class='line'> 76</span>         </span><span class="NAME">windowGroup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.applicationWindowGroup"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">chromeId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">        
+<span class='line'> 78</span>         </span><span class="COMM">//Based on this commit https://github.com/chutten/browser/commit/161b3e5ad0b8e3b7aaa67dc6bfb1661a966f1163</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">        </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parseInt</span><span class="PUNC">(</span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">'webview.create'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">windowGroup</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"InProcess"</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 80</span> 
+<span class='line'> 81</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 82</span> </span><span class="WHIT">            </span><span class="NAME">onComplete</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 83</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 84</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 85</span> 
 <span class='line'> 86</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 87</span>      * @description Sets the URL on the webview
-<span class='line'> 88</span>      * @param {String} url The fully qualified url to be loaded into the webview
-<span class='line'> 89</span>      */</span><span class="WHIT"> 
-<span class='line'> 90</span>     </span><span class="NAME">Webview.prototype.setURL</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 91</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.loadURL"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 93</span> 
-<span class='line'> 94</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 95</span>      * @description Executes javascript in the context of the webview
-<span class='line'> 96</span>      * @param {String} js The javascript expression to be executed
-<span class='line'> 97</span>      * @param {boolean} [inIsolatedWorld=false] Run javascript in isolated context
-<span class='line'> 98</span>      * @param {callback} [onComplete] A callback to be invoked when the destruction call is complete
-<span class='line'> 99</span>      */</span><span class="WHIT"> 
-<span class='line'>100</span>     </span><span class="NAME">Webview.prototype.executeJavaScript</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">js</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">inIsolatedWorld</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>101</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.executeJavaScript"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">js</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">inIsolatedWorld</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>102</span> </span><span class="WHIT">        
-<span class='line'>103</span>         </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>104</span> </span><span class="WHIT">            </span><span class="NAME">onComplete</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>105</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>106</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>107</span> 
-<span class='line'>108</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Webview</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>109</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>110</span> 
-<span class='line'>111</span> </span><span class="COMM">/**
-<span class='line'>112</span>  * @exports _self as webviewFactory
-<span class='line'>113</span>  * @namespace webviewFactory
-<span class='line'>114</span>  */</span><span class="WHIT">
-<span class='line'>115</span> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>116</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>117</span>      * @description This method creates a new webview object 
-<span class='line'>118</span>      * @returns {Webview} A webview object
-<span class='line'>119</span>      */</span><span class="WHIT"> 
-<span class='line'>120</span>     </span><span class="NAME">create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>121</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Webview</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>122</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>123</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>124</span> 
-<span class='line'>125</span> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>126</span> </span></pre></body></html>
+<span class='line'> 87</span>      * @description Sets the location of the webview on the screen
+<span class='line'> 88</span>      * @param {Number} x The x position of the webview
+<span class='line'> 89</span>      * @param {Number} y The y position of the webview
+<span class='line'> 90</span>      * @param {Number} width The width of the webview
+<span class='line'> 91</span>      * @param {Number} height The height of the webview
+<span class='line'> 92</span>      */</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="NAME">Webview.prototype.setGeometry</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">x</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">y</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">width</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">height</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.setGeometry"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">x</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">y</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">width</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">height</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> 
+<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 98</span>      * @description Destroys the underlying native webview
+<span class='line'> 99</span>      * @param {callback} [onComplete] A callback to be invoked when the destruction call is complete
+<span class='line'>100</span>      */</span><span class="WHIT"> 
+<span class='line'>101</span>     </span><span class="NAME">Webview.prototype.destroy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.destroy"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">        
+<span class='line'>104</span>         </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">            </span><span class="NAME">onComplete</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> 
+<span class='line'>109</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>110</span>      * @description Sets the URL on the webview
+<span class='line'>111</span>      * @param {String} url The fully qualified url to be loaded into the webview
+<span class='line'>112</span>      */</span><span class="WHIT"> 
+<span class='line'>113</span>     </span><span class="NAME">Webview.prototype.setURL</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.loadURL"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>116</span> 
+<span class='line'>117</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>118</span>      * @description Executes javascript in the context of the webview
+<span class='line'>119</span>      * @param {String} js The javascript expression to be executed
+<span class='line'>120</span>      * @param {boolean} [inIsolatedWorld=false] Run javascript in isolated context
+<span class='line'>121</span>      * @param {callback} [onComplete] A callback to be invoked when the destruction call is complete
+<span class='line'>122</span>      */</span><span class="WHIT"> 
+<span class='line'>123</span>     </span><span class="NAME">Webview.prototype.executeJavaScript</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">js</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">inIsolatedWorld</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">        </span><span class="NAME">qnx.callExtensionMethod</span><span class="PUNC">(</span><span class="STRN">"webview.executeJavaScript"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">js</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">inIsolatedWorld</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">        
+<span class='line'>126</span>         </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">onComplete</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">            </span><span class="NAME">onComplete</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>130</span> 
+<span class='line'>131</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Webview</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>133</span> 
+<span class='line'>134</span> </span><span class="COMM">/**
+<span class='line'>135</span>  * @exports _self as webviewFactory
+<span class='line'>136</span>  * @namespace webviewFactory
+<span class='line'>137</span>  */</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="NAME">_self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>140</span>      * @description This method creates a new webview object 
+<span class='line'>141</span>      * @returns {Webview} A webview object
+<span class='line'>142</span>      */</span><span class="WHIT"> 
+<span class='line'>143</span>     </span><span class="NAME">create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Webview</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>147</span> 
+<span class='line'>148</span> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_self</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span></pre></body></html>

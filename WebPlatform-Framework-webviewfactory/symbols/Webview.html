@@ -245,6 +245,64 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class Webview.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/Webview.html#active">active</a></b>
+								</div>
+								<div class="description">Whether the webview is currently active</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/Webview.html#id">id</a></b>
+								</div>
+								<div class="description">The id of the webview</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/Webview.html#visible">visible</a></b>
+								</div>
+								<div class="description">Whether the webview is currently visible</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/Webview.html#zOrder">zOrder</a></b>
+								</div>
+								<div class="description">The zOrder of the webview</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
@@ -259,15 +317,6 @@ ul.inheritsList
 						</tr>
 					</thead>
 					<tbody>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Webview.html#background">background</a></b>()
-								</div>
-								<div class="description">Disables the webview's visibility, activity and ZOrderedness</div>
-							</td>
-						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
@@ -299,9 +348,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Webview.html#foreground">foreground</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Webview.html#setGeometry">setGeometry</a></b>(x, y, width, height)
 								</div>
-								<div class="description">Sets the webview to visible, active and ZOrdered</div>
+								<div class="description">Sets the location of the webview on the screen</div>
 							</td>
 						</tr>
 					
@@ -355,37 +404,105 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-
-<!-- ============================== method details ========================= -->		
-			
 				<div class="sectionTitle">
-					Method Detail
+					Field Detail
 				</div>
 				
-					<a name="background"> </a>
+					<a name="active"> </a>
 					<div class="fixedFont">
 					
-					
-					<b>background</b>()
+					<span class="light">{Boolean}</span>
+					<b>active</b>
 					
 					</div>
 					<div class="description">
-						Disables the webview's visibility, activity and ZOrderedness
+						Whether the webview is currently active
 						
 						
 					</div>
 					
 					
-					
-						
-						
-						
+
 						
 						
 						
 						
 
 					<hr />
+				
+					<a name="id"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>id</b>
+					
+					</div>
+					<div class="description">
+						The id of the webview
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="visible"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>visible</b>
+					
+					</div>
+					<div class="description">
+						Whether the webview is currently visible
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="zOrder"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>zOrder</b>
+					
+					</div>
+					<div class="description">
+						The zOrder of the webview
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
 				
 					<a name="create"> </a>
 					<div class="fixedFont">
@@ -507,21 +624,50 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="foreground"> </a>
+					<a name="setGeometry"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>foreground</b>()
+					<b>setGeometry</b>(x, y, width, height)
 					
 					</div>
 					<div class="description">
-						Sets the webview to visible, active and ZOrdered
+						Sets the location of the webview on the screen
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>x</b>
+									
+								</dt>
+								<dd>The x position of the webview</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>y</b>
+									
+								</dt>
+								<dd>The y position of the webview</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>width</b>
+									
+								</dt>
+								<dd>The width of the webview</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>height</b>
+									
+								</dt>
+								<dd>The height of the webview</dd>
+							
+							</dl>
 						
 						
 						
@@ -580,7 +726,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Feb 10 2012 13:33:03 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Feb 10 2012 17:06:41 GMT-0500 (EST)
 		</div>
 	</body>
 </html>
