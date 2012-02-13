@@ -17,47 +17,33 @@ describe("webviewFactory", function () {
     });
 
     it("can create a webview instance", function () {
-        var webview = webviewFactory.create();   
+        var webview = webviewFactory.create();
         expect(webview.id).toEqual(jasmine.any(Number));
+        expect(webview.windowGroup).toEqual(jasmine.any(Number));
         expect(webview.visible).toEqual(false);
         expect(webview.active).toEqual(false);
         expect(webview.zOrder).toEqual(jasmine.any(Number));
-    });
-    
-    it("can create a webview instance that can call create", function () {
-        var webview = webviewFactory.create(),
-            callback = jasmine.createSpy();
-        webview.prototype.create(callback);
-        expect(callback).toHaveBeenCalled();
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.applicationWindowGroup", 1);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.create", jasmine.any(Number), "InProcess");
     });
     
     it("can create a webview instance that can be destroyed", function () {
-        var webview = webviewFactory.create(),
-            callback = jasmine.createSpy();
-        webview.prototype.create(callback);
-        webview.prototype.destroy();
-        expect(callback).toHaveBeenCalled();
+        var webview = webviewFactory.create();
+        webview.destroy();
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.destroy", jasmine.any(Number));
     });
    
     it("can create a webview instance that can set a url", function () {
         var webview = webviewFactory.create(),
-            url = "http://www.google.com",
-            callback = function () {
-                webview.prototype.setURL(url);
-            };
-        webview.prototype.create(callback);
+            url = "http://www.google.com";
+        webview.setURL(url);
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.loadURL", jasmine.any(Number), url);
     });
 
     it("can create a webview instance that can execute javascript", function () {
         var webview = webviewFactory.create(),
-            jsExpression = "var a = 'awesome';",
-            callback = function () {
-                webview.prototype.executeJavaScript(jsExpression);
-            }; 
-        webview.prototype.create(callback);
+            jsExpression = "var a = 'awesome';";
+        webview.executeJavaScript(jsExpression);
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.executeJavaScript", jasmine.any(Number), jsExpression, false);
     });
 
@@ -88,8 +74,15 @@ describe("webviewFactory", function () {
     it("can create a webview instance that can have its geometry set", function () {
         var webview = webviewFactory.create();
         //Need to call using prototype for no good reason
-        webview.prototype.setGeometry(0, 0, 0, 0);
+        webview.setGeometry(0, 0, 0, 0);
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setGeometry", webview.id, 0, 0, 0, 0);
+    });
+
+    it("can create a webview instance that can have its background color set", function () {
+        var webview = webviewFactory.create();
+        //Need to call using prototype for no good reason
+        webview.setBackgroundColor("0x00FFFF00");
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setBackgroundColor", webview.id, "0x00FFFF00");
     });
 
 });
