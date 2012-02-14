@@ -69,14 +69,12 @@ describe("webviewFactory", function () {
 
     it("can create a webview instance that can have its geometry set", function () {
         var webview = webviewFactory.createWebview();
-        //Need to call using prototype for no good reason
         webview.setGeometry(0, 0, 0, 0);
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setGeometry", webview.id, 0, 0, 0, 0);
     });
 
     it("can create a webview instance that can have its background color set", function () {
         var webview = webviewFactory.createWebview();
-        //Need to call using prototype for no good reason
         webview.setBackgroundColor("0x00FFFF00");
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setBackgroundColor", webview.id, "0x00FFFF00");
     });
