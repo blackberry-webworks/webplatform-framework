@@ -1,11 +1,10 @@
 var srcPath = __dirname + "/../../../lib/";
-var webviewFactory,
-    utils = require(srcPath + "utils"), 
-    mockedQnx = { 
-        callExtensionMethod: jasmine.createSpy().andReturn(999)
-    };
 
 describe("webviewFactory", function () {
+        
+    var webviewFactory,
+        mockedQnx = require(srcPath + "mockedObjects").mockedQnx,
+        utils = require(srcPath + "utils");
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
@@ -79,4 +78,26 @@ describe("webviewFactory", function () {
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setBackgroundColor", webview.id, "0x00FFFF00");
     });
 
+});
+
+describe("some test", function () {
+
+    beforeEach(function () {
+       // webviewFactory = require(srcPath + "webviewFactory");
+        utils = require(srcPath + "utils");
+        mockedQnx = require(srcPath + "mockedObjects").mockedQnx; 
+        webviewFactory = require(srcPath + "webviewFactory");
+    });
+
+    it("can create a webview instance", function () {
+        var webview = webviewFactory.createWebview();
+        expect(webview.id).toEqual(jasmine.any(Number));
+        expect(webview.windowGroup).toEqual(jasmine.any(Number));
+        expect(webview.visible).toEqual(false);
+        expect(webview.active).toEqual(false);
+        expect(webview.zOrder).toEqual(jasmine.any(Number));
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.applicationWindowGroup", 1);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.create", jasmine.any(Number), "InProcess");
+    });
+    
 });
