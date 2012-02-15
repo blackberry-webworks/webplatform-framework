@@ -81,32 +81,25 @@ describe("webviewFactory", function () {
 
     it("can create a webview instance that can listen to events", function () {
         var webview = webviewFactory.createWebview(),
-            callback = function(){};
+            callback = function () {};
         spyOn(webkitEvent, "on");
         webview.on("Created", callback);
         expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
     });
 
-});
-
-describe("some test", function () {
-
-    beforeEach(function () {
-       // webviewFactory = require(srcPath + "webviewFactory");
-        utils = require(srcPath + "utils");
-        mockedQnx = require(srcPath + "mockedObjects").mockedQnx; 
-        webviewFactory = require(srcPath + "webviewFactory");
+    it("can create a webview instance that can listen to events once", function () {
+        var webview = webviewFactory.createWebview(),
+            callback = function () {};
+        spyOn(webkitEvent, "once");
+        webview.once("Created", callback);
+        expect(webkitEvent.once).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
     });
 
-    it("can create a webview instance", function () {
+    it("can create a webview instance that can clear its listeners", function () {
         var webview = webviewFactory.createWebview();
-        expect(webview.id).toEqual(jasmine.any(Number));
-        expect(webview.windowGroup).toEqual(jasmine.any(Number));
-        expect(webview.visible).toEqual(false);
-        expect(webview.active).toEqual(false);
-        expect(webview.zOrder).toEqual(jasmine.any(Number));
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.applicationWindowGroup", 1);
-        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.create", jasmine.any(Number), "InProcess");
+        spyOn(webkitEvent, "clear");
+        webview.clear("Created");
+        expect(webkitEvent.clear).toHaveBeenCalledWith({id : webview.id, eventType : "Created"});
     });
-    
+
 });

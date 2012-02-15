@@ -5,47 +5,7 @@ describe("webviewFactory eventing", function () {
     var chrome = {internal : require(srcPath + "chrome/internal")},
         blackberry,
         utils = require(srcPath + "utils"), 
-        events = [
-            'PropertyViewportEvent', 
-            'QNXWebDestroyedEvent', 
-            'Destroyed', 
-            'Created', 
-            'PropertyLoadProgressEvent', 
-            'PropertyLocationEvent', 
-            'PropertyTitleEvent', 
-            'PropertyCanGoBackEvent', 
-            'PropertyCanGoForwardEvent', 
-            'PropertyFaviconEvent', 
-            'PropertySecureTypeEvent', 
-            'JavaScriptResult', 
-            'ContentRendered',
-            'JavaScriptWindowObjectCleared', 
-            'PropertyTooltipEvent', 
-            'Created', 
-            'DocumentLoadCommitted', 
-            'DocumentLoaded', 
-            'DocumentLoadFinished', 
-            'LocationChange', 
-            'LocationChanging', 
-            'NetworkError', 
-            'PropertyActiveEvent', 
-            'PropertyBackgroundColorEvent', 
-            'PropertyCertificateInfoEvent', 
-            'PropertyContentRectangleEvent',
-            'PropertyEnableWebInspectorEvent', 
-            'PropertyEncryptionInfoEvent', 
-            'PropertyHistoryListEvent', 
-            'PropertyHistoryPositionEvent',
-            'PropertyJavaScriptInterruptTimeoutEvent', 
-            'PropertyOriginalLocationEvent', 
-            'PropertyScaleEvent', 
-            'PropertyScrollPositionEvent', 
-            'PropertyStatusEvent',
-            'PropertyVisibleEvent', 
-            'PropertyWebInspectorPortEvent'
-        ],
-        mockedQnx = require(srcPath + "mockedObjects").mockedQnx,
-        webkitEvent = require(srcPath + 'webkitEvent');
+        mockedQnx = require(srcPath + "mockedObjects").mockedQnx;
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
@@ -57,27 +17,30 @@ describe("webviewFactory eventing", function () {
             callback = jasmine.createSpy(),
             value = "AwesomeSauceZorZ";
         
-        spyOn(webkitEvent,"on").andCallThrough();
         webview.on('Created', callback);
-        expect(webkitEvent.on).toHaveBeenCalledWith(
-            {id : webview.id, eventType : "Created"}, callback);
-        
-        spyOn(webkitEvent, "emit").andCallThrough();
         chrome.internal.webEvent(webview.id, 'Created', value);
-        expect(webkitEvent.emit).toHaveBeenCalledWith(
-            {id : webview.id, eventType : "Created"}, [value]);
         
         expect(callback).not.toHaveBeenCalled();
-        waits(5);
+        waits(1);
         runs(function () {
             expect(callback).toHaveBeenCalledWith(value);
         });
-            /*events.forEach(function (event) {
-            webview.on(event, spy);
-            chrome.internal.webEvent(webview.id, event, value);
-            expect(spy).toHaveBeenCalledWith([value]);
-            });*/
-
-        });
     });
+
+    it("can create webviews that can listen to system events once", function () {
+        var webview = blackberry.createWebview(),
+            callback = jasmine.createSpy(),
+            value = "AwesomeSauceZorZ";
+        
+        webview.once('ContentRendered', callback);
+        chrome.internal.webEvent(webview.id, 'ContentRendered', value);
+        chrome.internal.webEvent(webview.id, 'ContentRendered', value);
+        
+        waits(1);
+        runs(function () {
+            expect(callback.callCount).toEqual(1);
+        });
+
+    });
+});
 
