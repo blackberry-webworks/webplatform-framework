@@ -1,2 +1,3 @@
 WebPlatform-Framework-webviewfactory
 WebPlatform-Framework
+WebPlatform-Framework-webviewfactory-eventing
