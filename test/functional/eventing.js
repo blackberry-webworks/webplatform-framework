@@ -57,12 +57,12 @@ describe("webviewFactory eventing", function () {
             callback = jasmine.createSpy(),
             value = "AwesomeSauceZorZ";
         
-        spyOn(webkitEvent,"on");
+        spyOn(webkitEvent,"on").andCallThrough();
         webview.on('Created', callback);
         expect(webkitEvent.on).toHaveBeenCalledWith(
             {id : webview.id, eventType : "Created"}, callback);
         
-        spyOn(webkitEvent, "emit");
+        spyOn(webkitEvent, "emit").andCallThrough();
         chrome.internal.webEvent(webview.id, 'Created', value);
         expect(webkitEvent.emit).toHaveBeenCalledWith(
             {id : webview.id, eventType : "Created"}, [value]);
@@ -70,7 +70,7 @@ describe("webviewFactory eventing", function () {
         expect(callback).not.toHaveBeenCalled();
         waits(5);
         runs(function () {
-            expect(callback).toHaveBeenCalledWith([value]);
+            expect(callback).toHaveBeenCalledWith(value);
         });
             /*events.forEach(function (event) {
             webview.on(event, spy);
