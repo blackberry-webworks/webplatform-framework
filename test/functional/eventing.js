@@ -2,9 +2,7 @@ var srcPath = __dirname + "/../../lib/";
 
 describe("webviewFactory eventing", function () {
 
-    var chrome = {
-            internal : require(srcPath + "chrome/internal")
-        },
+    var chrome = {internal : require(srcPath + "chrome/internal")},
         blackberry,
         utils = require(srcPath + "utils"), 
         events = [
@@ -44,8 +42,10 @@ describe("webviewFactory eventing", function () {
             'PropertyScrollPositionEvent', 
             'PropertyStatusEvent',
             'PropertyVisibleEvent', 
-            'PropertyWebInspectorPortEvent'];
-        mockedQnx = require(srcPath + "mockedObjects").mockedQnx; 
+            'PropertyWebInspectorPortEvent'
+        ],
+        mockedQnx = require(srcPath + "mockedObjects").mockedQnx,
+        webkitEvent = require(srcPath + 'webkitEvent');
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
@@ -56,9 +56,18 @@ describe("webviewFactory eventing", function () {
         var webview = blackberry.createWebview(),
             callback = jasmine.createSpy(),
             value = {};
+        
+        spyOn(webkitEvent,"on");
         webview.on('Created', callback);
+        expect(webkitEvent.on).toHaveBeenCalledWith(
+            {id : webview.id, eventType : "Created"}, callback);
+        
+        spyOn(webkitEvent, "emit");
         chrome.internal.webEvent(webview.id, 'Created', value);
-        expect(callback).toHaveBeenCalled();
+        expect(webkitEvent.emit).toHaveBeenCalledWith(
+            {id : webview.id, eventType : "Created"}, [value]);
+        
+        expect(callback).toHaveBeenCalledWith([value]);
         /*events.forEach(function (event) {
             webview.on(event, spy);
             chrome.internal.webEvent(webview.id, event, value);

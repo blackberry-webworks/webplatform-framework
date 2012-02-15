@@ -4,7 +4,8 @@ describe("webviewFactory", function () {
         
     var webviewFactory,
         mockedQnx = require(srcPath + "mockedObjects").mockedQnx,
-        utils = require(srcPath + "utils");
+        utils = require(srcPath + "utils"),
+        webkitEvent = require(srcPath + "webkitEvent");
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
@@ -76,6 +77,14 @@ describe("webviewFactory", function () {
         var webview = webviewFactory.createWebview();
         webview.setBackgroundColor("0x00FFFF00");
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setBackgroundColor", webview.id, "0x00FFFF00");
+    });
+
+    it("can create a webview instance that can listen to events", function () {
+        var webview = webviewFactory.createWebview(),
+            callback = function(){};
+        spyOn(webkitEvent, "on");
+        webview.on("Created", callback);
+        expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
     });
 
 });

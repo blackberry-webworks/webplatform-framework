@@ -22,21 +22,13 @@ describe("internal", function () {
             expect(webkitEvent.emit).toHaveBeenCalled();
         });
 
-
-        it("emits an event", function () {
-            var id = 42,
-                eventType = "Created";
-            internal.webEvent(id, eventType);
-            expect(webkitEvent.emit).toHaveBeenCalled();
-        });
-
         it("emits an event with the expected id and eventId", function () {
             var inputId = 42,
                 inputEventType = "Created",
                 value = "Some value";
             internal.webEvent(inputId, inputEventType, value);
-            expect(webkitEvent.emit).toHaveBeenCalledWith(inputEventType, [value]
-            );
+            expect(webkitEvent.emit).toHaveBeenCalledWith(
+                {id : inputId, eventType: inputEventType}, [value]);
         });
 
         it("prints an error message when the eventType is invalid", function () {
