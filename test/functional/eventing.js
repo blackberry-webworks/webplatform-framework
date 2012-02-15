@@ -55,7 +55,7 @@ describe("webviewFactory eventing", function () {
     it("can create webviews that can listen to system events", function () {
         var webview = blackberry.createWebview(),
             callback = jasmine.createSpy(),
-            value = {};
+            value = "AwesomeSauceZorZ";
         
         spyOn(webkitEvent,"on");
         webview.on('Created', callback);
@@ -67,13 +67,17 @@ describe("webviewFactory eventing", function () {
         expect(webkitEvent.emit).toHaveBeenCalledWith(
             {id : webview.id, eventType : "Created"}, [value]);
         
-        expect(callback).toHaveBeenCalledWith([value]);
-        /*events.forEach(function (event) {
+        expect(callback).not.toHaveBeenCalled();
+        waits(5);
+        runs(function () {
+            expect(callback).toHaveBeenCalledWith([value]);
+        });
+            /*events.forEach(function (event) {
             webview.on(event, spy);
             chrome.internal.webEvent(webview.id, event, value);
             expect(spy).toHaveBeenCalledWith([value]);
-        });*/
-    
+            });*/
+
+        });
     });
-});
 

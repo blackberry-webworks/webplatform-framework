@@ -50,8 +50,8 @@ describe("event", function () {
 
         it("can call the listener async", function () {
             var spy = jasmine.createSpy();
-            event.on("test emit", spy);
-            event.emit("test emit", [], false);
+            event.on({id : 1, eventType : "Created"}, spy);
+            event.emit({id: 1, eventType : "Created"}, [], false);
             expect(spy).not.toHaveBeenCalled();
             waits(1);
             runs(function () {
