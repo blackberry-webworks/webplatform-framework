@@ -17,7 +17,7 @@ describe("webviewFactory eventing", function () {
             callback = jasmine.createSpy(),
             value = "AwesomeSauceZorZ";
         
-        webview.on('Created', callback);
+        webview.addEventListener('Created', callback);
         chrome.internal.webEvent(webview.id, 'Created', value);
         
         expect(callback).not.toHaveBeenCalled();
@@ -27,20 +27,5 @@ describe("webviewFactory eventing", function () {
         });
     });
 
-    it("can create webviews that can listen to system events once", function () {
-        var webview = blackberry.createWebview(),
-            callback = jasmine.createSpy(),
-            value = "AwesomeSauceZorZ";
-        
-        webview.once('ContentRendered', callback);
-        chrome.internal.webEvent(webview.id, 'ContentRendered', value);
-        chrome.internal.webEvent(webview.id, 'ContentRendered', value);
-        
-        waits(1);
-        runs(function () {
-            expect(callback.callCount).toEqual(1);
-        });
-
-    });
 });
 

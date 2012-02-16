@@ -83,22 +83,32 @@ describe("webviewFactory", function () {
         var webview = webviewFactory.createWebview(),
             callback = function () {};
         spyOn(webkitEvent, "on");
-        webview.on("Created", callback);
+        webview.addEventListener("Created", callback);
         expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
     });
 
-    it("can create a webview instance that can listen to events once", function () {
+    it("can create a webview instance that can dispatch events", function () {
         var webview = webviewFactory.createWebview(),
-            callback = function () {};
-        spyOn(webkitEvent, "once");
-        webview.once("Created", callback);
-        expect(webkitEvent.once).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
-    });
+            callback = jasmine.createSpy(),
+            args = ["one", "two", "many"]
+        spyOn(webkitEvent, "on").andCallThrough();
+        webview.addEventListener("Created", callback);
+        expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
 
+        spyOn(webkitEvent, "emit").andCallThrough();
+        webview.dispatchEvent("Created", args);
+        expect(webkitEvent.emit).toHaveBeenCalledWith({id: webview.id, eventType : "Created"}, args);
+
+        waits(1);
+        runs(function () {
+            expect(callback).toHaveBeenCalledWith(args[0],args[1],args[2]);
+        });
+    });
+    
     it("can create a webview instance that can clear its listeners", function () {
         var webview = webviewFactory.createWebview();
         spyOn(webkitEvent, "clear");
-        webview.clear("Created");
+        webview.removeAllEventListeners("Created");
         expect(webkitEvent.clear).toHaveBeenCalledWith({id : webview.id, eventType : "Created"});
     });
 
