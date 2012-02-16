@@ -112,4 +112,13 @@ describe("webviewFactory", function () {
         expect(webkitEvent.clear).toHaveBeenCalledWith({id : webview.id, eventType : "Created"});
     });
 
+    it("can create a webview instance that can remove a single event listener", function () {
+        var webview = webviewFactory.createWebview(),
+            identifier = {id: webview.id, eventType : "Created"},
+            callback = jasmine.createSpy();
+        spyOn(webkitEvent, "removeEventListener");
+        webview.removeEventListener("Created", callback);
+        expect(webkitEvent.removeEventListener).toHaveBeenCalledWith(identifier, callback);
+    });
+
 });
