@@ -90,7 +90,7 @@ describe("webviewFactory", function () {
     it("can create a webview instance that can dispatch events", function () {
         var webview = webviewFactory.createWebview(),
             callback = jasmine.createSpy(),
-            args = ["one", "two", "many"]
+            args = ["one", "two", "many"];
         spyOn(webkitEvent, "on").andCallThrough();
         webview.addEventListener("Created", callback);
         expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
@@ -101,7 +101,7 @@ describe("webviewFactory", function () {
 
         waits(1);
         runs(function () {
-            expect(callback).toHaveBeenCalledWith(args[0],args[1],args[2]);
+            expect(callback).toHaveBeenCalledWith(args[0], args[1], args[2]);
         });
     });
     
