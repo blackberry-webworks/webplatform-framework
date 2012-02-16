@@ -1,7 +1,46 @@
 var srcPath = __dirname + "/../../../../lib/",
     internal,
     webkitEvent = require(srcPath + "webkitEvent"),
-    utils = require(srcPath + "utils");
+    utils = require(srcPath + "utils"),
+    eventTypes = [
+        'PropertyViewportEvent', 
+        'QNXWebDestroyedEvent', 
+        'Destroyed', 
+        'Created', 
+        'PropertyLoadProgressEvent', 
+        'PropertyLocationEvent', 
+        'PropertyTitleEvent', 
+        'PropertyCanGoBackEvent', 
+        'PropertyCanGoForwardEvent', 
+        'PropertyFaviconEvent', 
+        'PropertySecureTypeEvent', 
+        'JavaScriptResult', 
+        'ContentRendered',
+        'JavaScriptWindowObjectCleared', 
+        'PropertyTooltipEvent', 
+        'Created', 
+        'DocumentLoadCommitted', 
+        'DocumentLoaded', 
+        'DocumentLoadFinished', 
+        'LocationChange', 
+        'LocationChanging', 
+        'NetworkError', 
+        'PropertyActiveEvent', 
+        'PropertyBackgroundColorEvent', 
+        'PropertyCertificateInfoEvent', 
+        'PropertyContentRectangleEvent',
+        'PropertyEnableWebInspectorEvent', 
+        'PropertyEncryptionInfoEvent', 
+        'PropertyHistoryListEvent', 
+        'PropertyHistoryPositionEvent',
+        'PropertyJavaScriptInterruptTimeoutEvent', 
+        'PropertyOriginalLocationEvent', 
+        'PropertyScaleEvent', 
+        'PropertyScrollPositionEvent', 
+        'PropertyStatusEvent',
+        'PropertyVisibleEvent', 
+        'PropertyWebInspectorPortEvent'
+    ];
 
 describe("internal", function () {
     
@@ -41,6 +80,15 @@ describe("internal", function () {
             expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith(
                 "webview.printToStderr", 1, "Unknown Event: " + 
                 eventType + ":" + value + "\n");
+        });
+
+        it("emits the proper event for all event types", function () {
+            var id = 42;
+            eventTypes.forEach(function (eventType) {
+                internal.webEvent(id, eventType, eventType);
+                expect(webkitEvent.emit).toHaveBeenCalledWith(
+                    {id: id, eventType: eventType}, [eventType]);
+            });
         });
     });
 });
