@@ -50,8 +50,8 @@ describe("event", function () {
 
         it("can call the listener async", function () {
             var spy = jasmine.createSpy();
-            event.on("test emit", spy);
-            event.emit("test emit", [], false);
+            event.on({id : 1, eventType : "Created"}, spy);
+            event.emit({id: 1, eventType : "Created"}, [], false);
             expect(spy).not.toHaveBeenCalled();
             waits(1);
             runs(function () {
@@ -84,6 +84,48 @@ describe("event", function () {
                 expect(spy).toHaveBeenCalled();
             });
         });
+    });
+
+    describe("removeEventListener", function () {
+        
+        afterEach(function () {
+            event.clear({id: 42, eventType: "test event"});
+        });
+
+        it("removes a subscriber for an event type", function () {
+            var identifier = {id: 42, eventType: "test event"}, 
+                spy = jasmine.createSpy();
+            event.on(identifier, spy);
+            event.removeEventListener(identifier, spy);
+            event.emit(identifier, null, true);
+
+            expect(spy).not.toHaveBeenCalled();
+        });
+
+        it("removes a specific subscriber for an event type", function () {
+            var identifier = {id: 42, eventType: "test event"},
+                jamesBond = jasmine.createSpy("bond"),
+                alecTrevelyan = jasmine.createSpy("trevelyan");
+            event.on(identifier, alecTrevelyan);
+            event.on(identifier, jamesBond);
+            event.removeEventListener(identifier, alecTrevelyan);
+            event.emit(identifier, null, true);
+
+            expect(alecTrevelyan).not.toHaveBeenCalled();
+            expect(jamesBond).toHaveBeenCalled();
+        });
+
+        it("throws an exception when the event is not truthy", function () {
+            var identifier = {id: 42, eventType: "test event"},
+                spy = jasmine.createSpy();
+            event.on(identifier, spy);
+            expect(function () {
+                event.removeEventListener(false, spy);
+            }).toThrow();
+            event.emit(identifier, null, true);
+            expect(spy).toHaveBeenCalled();
+        });
+
     });
 
     describe("clear", function () {
