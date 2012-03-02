@@ -191,9 +191,9 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/Webview.html">Webview</a></li>
+	<li><a href="../symbols/blackberry.html">blackberry</a></li>
 	
-	<li><a href="../symbols/webviewFactory.html">webviewFactory</a></li>
+	<li><a href="../symbols/Webview.html">Webview</a></li>
 	
 </ul>
 <hr />
@@ -331,6 +331,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Webview.html#addEventListener">addEventListener</a></b>(eventType, eventListener)
+								</div>
+								<div class="description">Adds a listener for a given event.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Webview.html#destroy">destroy</a></b>(onComplete)
 								</div>
 								<div class="description">Destroys the underlying native webview</div>
@@ -340,9 +349,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Webview.html#dispatchEvent">dispatchEvent</a></b>(eventType, args)
+								</div>
+								<div class="description">Dispatches an event of the provided type with the given arguments to all registered listeners.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Webview.html#executeJavaScript">executeJavaScript</a></b>(js, inIsolatedWorld, onComplete)
 								</div>
 								<div class="description">Executes javascript in the context of the webview</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Webview.html#removeAllEventListeners">removeAllEventListeners</a></b>(eventType)
+								</div>
+								<div class="description">Removes all registered listeners for a given event</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Webview.html#removeEventListener">removeEventListener</a></b>(eventType, eventListener)
+								</div>
+								<div class="description">Removes a specific registered listener for a given event</div>
 							</td>
 						</tr>
 					
@@ -536,6 +572,49 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
+					<a name="addEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addEventListener</b>(eventType, eventListener)
+					
+					</div>
+					<div class="description">
+						Adds a listener for a given event. Multiple listeners can be registered for the same event.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>eventType</b>
+									
+								</dt>
+								<dd>The native event to be listened to. 
+Can be one of 'PropertyViewportEvent', 'QNXWebDestroyedEvent', 'Destroyed', 'Created', 'PropertyLoadProgressEvent', 'PropertyLocationEvent', 'PropertyTitleEvent', 'PropertyCanGoBackEvent', 'PropertyCanGoForwardEvent', 'PropertyFaviconEvent', 'PropertySecureTypeEvent', 'JavaScriptResult', 'ContentRendered', 'JavaScriptWindowObjectCleared', 'PropertyTooltipEvent', 'Created', 'DocumentLoadCommitted', 'DocumentLoaded', 'DocumentLoadFinished', 'LocationChange', 'LocationChanging', 'NetworkError', 'PropertyActiveEvent', 'PropertyBackgroundColorEvent', 'PropertyCertificateInfoEvent', 'PropertyContentRectangleEvent', 'PropertyEnableWebInspectorEvent', 'PropertyEncryptionInfoEvent', 'PropertyHistoryListEvent', 'PropertyHistoryPositionEvent', 'PropertyJavaScriptInterruptTimeoutEvent', 'PropertyOriginalLocationEvent', 'PropertyScaleEvent', 'PropertyScrollPositionEvent', 'PropertyStatusEvent', 'PropertyVisibleEvent', 'PropertyWebInspectorPortEvent', 'PropertyZOrderEvent'.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{callback}</span> <b>eventListener</b>
+									
+								</dt>
+								<dd>The function to be invoked when the event occurs</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="destroy"> </a>
 					<div class="fixedFont">
 					
@@ -560,6 +639,49 @@ ul.inheritsList
 									<i>Optional</i>
 								</dt>
 								<dd>A callback to be invoked when the destruction call is complete</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="dispatchEvent"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>dispatchEvent</b>(eventType, args)
+					
+					</div>
+					<div class="description">
+						Dispatches an event of the provided type with the given arguments to all registered listeners.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>eventType</b>
+									
+								</dt>
+								<dd>The native event to be listened to. 
+Can be one of 'PropertyViewportEvent', 'QNXWebDestroyedEvent', 'Destroyed', 'Created', 'PropertyLoadProgressEvent', 'PropertyLocationEvent', 'PropertyTitleEvent', 'PropertyCanGoBackEvent', 'PropertyCanGoForwardEvent', 'PropertyFaviconEvent', 'PropertySecureTypeEvent', 'JavaScriptResult', 'ContentRendered', 'JavaScriptWindowObjectCleared', 'PropertyTooltipEvent', 'Created', 'DocumentLoadCommitted', 'DocumentLoaded', 'DocumentLoadFinished', 'LocationChange', 'LocationChanging', 'NetworkError', 'PropertyActiveEvent', 'PropertyBackgroundColorEvent', 'PropertyCertificateInfoEvent', 'PropertyContentRectangleEvent', 'PropertyEnableWebInspectorEvent', 'PropertyEncryptionInfoEvent', 'PropertyHistoryListEvent', 'PropertyHistoryPositionEvent', 'PropertyJavaScriptInterruptTimeoutEvent', 'PropertyOriginalLocationEvent', 'PropertyScaleEvent', 'PropertyScrollPositionEvent', 'PropertyStatusEvent', 'PropertyVisibleEvent', 'PropertyWebInspectorPortEvent', 'PropertyZOrderEvent'.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object[]}</span> <b>args</b>
+									
+								</dt>
+								<dd>The array of objects to be passed to the event</dd>
 							
 							</dl>
 						
@@ -608,6 +730,86 @@ ul.inheritsList
 									<i>Optional</i>
 								</dt>
 								<dd>A callback to be invoked when the destruction call is complete</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removeAllEventListeners"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeAllEventListeners</b>(eventType)
+					
+					</div>
+					<div class="description">
+						Removes all registered listeners for a given event
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>eventType</b>
+									
+								</dt>
+								<dd>The native event to be listened to. 
+Can be one of 'PropertyViewportEvent', 'QNXWebDestroyedEvent', 'Destroyed', 'Created', 'PropertyLoadProgressEvent', 'PropertyLocationEvent', 'PropertyTitleEvent', 'PropertyCanGoBackEvent', 'PropertyCanGoForwardEvent', 'PropertyFaviconEvent', 'PropertySecureTypeEvent', 'JavaScriptResult', 'ContentRendered', 'JavaScriptWindowObjectCleared', 'PropertyTooltipEvent', 'Created', 'DocumentLoadCommitted', 'DocumentLoaded', 'DocumentLoadFinished', 'LocationChange', 'LocationChanging', 'NetworkError', 'PropertyActiveEvent', 'PropertyBackgroundColorEvent', 'PropertyCertificateInfoEvent', 'PropertyContentRectangleEvent', 'PropertyEnableWebInspectorEvent', 'PropertyEncryptionInfoEvent', 'PropertyHistoryListEvent', 'PropertyHistoryPositionEvent', 'PropertyJavaScriptInterruptTimeoutEvent', 'PropertyOriginalLocationEvent', 'PropertyScaleEvent', 'PropertyScrollPositionEvent', 'PropertyStatusEvent', 'PropertyVisibleEvent', 'PropertyWebInspectorPortEvent', 'PropertyZOrderEvent'.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removeEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeEventListener</b>(eventType, eventListener)
+					
+					</div>
+					<div class="description">
+						Removes a specific registered listener for a given event
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>eventType</b>
+									
+								</dt>
+								<dd>The native event to be listened to. 
+Can be one of 'PropertyViewportEvent', 'QNXWebDestroyedEvent', 'Destroyed', 'Created', 'PropertyLoadProgressEvent', 'PropertyLocationEvent', 'PropertyTitleEvent', 'PropertyCanGoBackEvent', 'PropertyCanGoForwardEvent', 'PropertyFaviconEvent', 'PropertySecureTypeEvent', 'JavaScriptResult', 'ContentRendered', 'JavaScriptWindowObjectCleared', 'PropertyTooltipEvent', 'Created', 'DocumentLoadCommitted', 'DocumentLoaded', 'DocumentLoadFinished', 'LocationChange', 'LocationChanging', 'NetworkError', 'PropertyActiveEvent', 'PropertyBackgroundColorEvent', 'PropertyCertificateInfoEvent', 'PropertyContentRectangleEvent', 'PropertyEnableWebInspectorEvent', 'PropertyEncryptionInfoEvent', 'PropertyHistoryListEvent', 'PropertyHistoryPositionEvent', 'PropertyJavaScriptInterruptTimeoutEvent', 'PropertyOriginalLocationEvent', 'PropertyScaleEvent', 'PropertyScrollPositionEvent', 'PropertyStatusEvent', 'PropertyVisibleEvent', 'PropertyWebInspectorPortEvent', 'PropertyZOrderEvent'.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>eventListener</b>
+									
+								</dt>
+								<dd>The function to be removed from the list of event listeners</dd>
 							
 							</dl>
 						
@@ -762,7 +964,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Feb 13 2012 16:31:41 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Mar 02 2012 11:42:33 GMT-0500 (EST)
 		</div>
 	</body>
 </html>
