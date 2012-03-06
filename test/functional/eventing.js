@@ -20,7 +20,7 @@ describe("webviewFactory eventing", function () {
         webview.addEventListener('Created', callback);
         chrome.internal.webEvent(webview.id, 'Created', value);
         
-        expect(callback).not.toHaveBeenCalled();
+        expect(callback).wasNotCalled();
         waits(1);
         runs(function () {
             expect(callback).toHaveBeenCalledWith(value);

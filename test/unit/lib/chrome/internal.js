@@ -67,7 +67,7 @@ describe("internal", function () {
                 value = "Some value";
             internal.webEvent(inputId, inputEventType, value);
             expect(webkitEvent.emit).toHaveBeenCalledWith(
-                {id : inputId, eventType: inputEventType}, [value]);
+                inputId, inputEventType, [value]);
         });
 
         it("prints an error message when the eventType is invalid", function () {
@@ -87,7 +87,7 @@ describe("internal", function () {
             eventTypes.forEach(function (eventType) {
                 internal.webEvent(id, eventType, eventType);
                 expect(webkitEvent.emit).toHaveBeenCalledWith(
-                    {id: id, eventType: eventType}, [eventType]);
+                    id, eventType, [eventType]);
             });
         });
     });

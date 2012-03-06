@@ -20,38 +20,44 @@ describe("event", function () {
     
     describe("the on method", function () {
         afterEach(function () {
-            event.clear("test on");
+            event.clear("testId");
         });
 
         it("registers an event", function () {
             expect(function () {
-                event.on("test on", function () {});
+                event.on("testId", "test on", function () {});
             }).not.toThrow();
         });
 
-        it("should throw an exception if registering for something falsy", function () {
+        it("should throw an exception if the ID is falsy", function () {
             expect(function () {
-                event.on(null, function () {});
+                event.on(0, "test on", function () {});
+            }).toThrow();
+        });
+        
+        it("should throw an exception if the ID is falsy", function () {
+            expect(function () {
+                event.on("testId", undefined, function () {});
             }).toThrow();
         });
     });
 
     describe("emit", function () {
         afterEach(function () {
-            event.clear("test emit");
+            event.clear("testId");
         });
 
         it("can call the listener sync", function () {
             var spy = jasmine.createSpy();
-            event.on("test emit", spy);
-            event.emit("test emit", [], true);
+            event.on("testId", "testType",  spy);
+            event.emit("testId", "testType", [], true);
             expect(spy).toHaveBeenCalled();
         });
 
         it("can call the listener async", function () {
             var spy = jasmine.createSpy();
-            event.on({id : 1, eventType : "Created"}, spy);
-            event.emit({id: 1, eventType : "Created"}, [], false);
+            event.on("testId", "testType",  spy);
+            event.emit("testId", "testType", [], false);
             expect(spy).not.toHaveBeenCalled();
             waits(1);
             runs(function () {
@@ -61,27 +67,49 @@ describe("event", function () {
 
         it("passes the arguments", function () {
             var spy = jasmine.createSpy();
-            event.on("test emit", spy);
-            event.emit("test emit", ["larry", "curly", "moe"], true);
+            event.on("testId", "Stooges", spy);
+            event.emit("testId", "Stooges", ["larry", "curly", "moe"], true);
             expect(spy).toHaveBeenCalledWith("larry", "curly", "moe");
         });
 
         it("sets the scope for the listener", function () {
             var kittens = {};
-            event.on("test emit", function () {
+            event.on("testId", "Fluffy", function () {
                 expect(this).toBe(kittens);
             }, kittens);
-            event.emit("test emit", [], true);
+            event.emit("testId", "Fluffy", [], true);
         });
 
         it("should call the listener async by default", function () {
             var spy = jasmine.createSpy();
-            event.on("test emit", spy);
-            event.emit("test emit");
+            event.on("testId", "testType", spy);
+            event.emit("testId", "testType");
             expect(spy).not.toHaveBeenCalled();
             waits(1);
             runs(function () {
                 expect(spy).toHaveBeenCalled();
+            });
+        });
+
+        it("should only call the desired listners", function () {
+            var austinPowers = jasmine.createSpy(),
+                alottaFagina = jasmine.createSpy(),
+                felicityShagwell = jasmine.createSpy();
+
+            event.on("testId", "Austin", austinPowers);
+            event.on("testId", "Alotta", alottaFagina);
+            event.on("testId", "Felicity", felicityShagwell);
+
+            event.emit("testId", "Austin");
+            event.emit("testId", "Austin");
+            event.emit("testId", "Alotta");
+            event.emit("testId", "FatBastard");
+
+            waits(3);
+            runs(function () {
+                expect(austinPowers.callCount).toEqual(2);
+                expect(alottaFagina.callCount).toEqual(1);
+                expect(felicityShagwell.callCount).toEqual(0);
             });
         });
     });
@@ -89,42 +117,48 @@ describe("event", function () {
     describe("removeEventListener", function () {
         
         afterEach(function () {
-            event.clear({id: 42, eventType: "test event"});
+            event.clear(42);
         });
 
         it("removes a subscriber for an event type", function () {
-            var identifier = {id: 42, eventType: "test event"}, 
-                spy = jasmine.createSpy();
-            event.on(identifier, spy);
-            event.removeEventListener(identifier, spy);
-            event.emit(identifier, null, true);
+            var spy = jasmine.createSpy();
+            event.on(42, "test event", spy);
+            event.removeEventListener(42, "test event", spy);
+            event.emit(42, "test event", null, true);
 
-            expect(spy).not.toHaveBeenCalled();
+            expect(spy).wasNotCalled();
         });
 
         it("removes a specific subscriber for an event type", function () {
-            var identifier = {id: 42, eventType: "test event"},
-                jamesBond = jasmine.createSpy("bond"),
+            var jamesBond = jasmine.createSpy("bond"),
                 alecTrevelyan = jasmine.createSpy("trevelyan");
-            event.on(identifier, alecTrevelyan);
-            event.on(identifier, jamesBond);
-            event.removeEventListener(identifier, alecTrevelyan);
-            event.emit(identifier, null, true);
+            event.on(42, "villain", alecTrevelyan);
+            event.on(42, "hero", jamesBond);
+            event.removeEventListener(42, "villain", alecTrevelyan);
+            event.emit(42, "villain", null, true);
+            event.emit(42, "hero", null, true);
 
-            expect(alecTrevelyan).not.toHaveBeenCalled();
+            expect(alecTrevelyan).wasNotCalled();
             expect(jamesBond).toHaveBeenCalled();
         });
 
         it("throws an exception when the event is not truthy", function () {
-            var identifier = {id: 42, eventType: "test event"},
-                spy = jasmine.createSpy();
-            event.on(identifier, spy);
+            var spy = jasmine.createSpy();
             expect(function () {
                 event.removeEventListener(false, spy);
             }).toThrow();
-            event.emit(identifier, null, true);
+        });
+
+        it("does not remove a listener when throwing an error", function () {
+            var spy = jasmine.createSpy();
+            event.on(42, "Truthy", spy);
+            expect(function () {
+                event.removeEventListener(false, spy);
+            }).toThrow();
+            event.emit(42, "Truthy", null, true);
             expect(spy).toHaveBeenCalled();
         });
+
 
     });
 
@@ -133,12 +167,12 @@ describe("event", function () {
             event.clear("test clear");
         });
 
-        it("removes all subscribers for an event type", function () {
+        it("removes all subscribers for an id", function () {
             var spy = jasmine.createSpy();
-            event.on("test clear", spy);
+            event.on("test clear", "type", spy);
 
             event.clear("test clear");
-            event.emit("test clear", null, true);
+            event.emit("test clear", "type", null, true);
 
             expect(spy).not.toHaveBeenCalled();
         });
@@ -146,9 +180,9 @@ describe("event", function () {
         it("clear with no params removes no subscribers", function () {
             var spy = jasmine.createSpy();
 
-            event.on("test clear", spy);
+            event.on("test clear", "type", spy);
             event.clear();
-            event.emit("test clear", null, true);
+            event.emit("test clear", "type", null, true);
 
             expect(spy).toHaveBeenCalled();
         });
@@ -161,9 +195,9 @@ describe("event", function () {
 
         it("test once only gets emitted once", function () {
             var func = jasmine.createSpy();
-            event.once("test once", func);
-            event.emit("test once");
-            event.emit("test once");
+            event.once("test once", "singular",  func);
+            event.emit("test once", "singular");
+            event.emit("test once", "singular");
             waits(1);
             runs(function () {
                 expect(func.callCount).toEqual(1);
