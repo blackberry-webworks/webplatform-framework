@@ -24,18 +24,36 @@ describe("webviewFactory", function () {
     });
     
     it("can create a webview instance that can be destroyed", function () {
-        var webview = webviewFactory.createWebview();
+        var webview = webviewFactory.createWebview(),
+            webviewId = webview.id;
+        spyOn(webkitEvent, "clear");
         webview.destroy();
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.destroy", jasmine.any(Number));
+        expect(webkitEvent.clear).toHaveBeenCalledWith(webviewId);
     });
+   
    
     it("can create a webview instance that can set a url", function () {
         var webview = webviewFactory.createWebview(),
             url = "http://www.google.com";
-        webview.setURL(url);
+        webview.url = url;
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.loadURL", jasmine.any(Number), url);
+        expect(webview.url).toEqual(url);
     });
 
+    it("can create a webview instance that has an updated url property", function () {
+        var webview = webviewFactory.createWebview(),
+            url = "http://www.google.com",
+            eventType = "LocationChange";
+        spyOn(webkitEvent, "emit").andCallThrough();
+        webview.dispatchEvent(eventType, [url]); // In substitution for having mockedQNX make the call 
+        waits(1);
+        runs(function () {
+            expect(webkitEvent.emit).toHaveBeenCalledWith(webview.id, eventType, [url]);
+            expect(webview.url).toEqual(url);
+        });
+    });
+    
     it("can create a webview instance that can execute javascript", function () {
         var webview = webviewFactory.createWebview(),
             jsExpression = "var a = 'awesome';";
@@ -84,7 +102,7 @@ describe("webviewFactory", function () {
             callback = function () {};
         spyOn(webkitEvent, "on");
         webview.addEventListener("Created", callback);
-        expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
+        expect(webkitEvent.on).toHaveBeenCalledWith(webview.id, "Created", callback);
     });
 
     it("can create a webview instance that can dispatch events", function () {
@@ -93,11 +111,13 @@ describe("webviewFactory", function () {
             args = ["one", "two", "many"];
         spyOn(webkitEvent, "on").andCallThrough();
         webview.addEventListener("Created", callback);
-        expect(webkitEvent.on).toHaveBeenCalledWith({id : webview.id, eventType : "Created"}, callback);
+        expect(webkitEvent.on).toHaveBeenCalledWith(
+            webview.id, "Created", callback);
 
         spyOn(webkitEvent, "emit").andCallThrough();
         webview.dispatchEvent("Created", args);
-        expect(webkitEvent.emit).toHaveBeenCalledWith({id: webview.id, eventType : "Created"}, args);
+        expect(webkitEvent.emit).toHaveBeenCalledWith(
+            webview.id, "Created", args);
 
         waits(1);
         runs(function () {
@@ -105,20 +125,13 @@ describe("webviewFactory", function () {
         });
     });
     
-    it("can create a webview instance that can clear its listeners", function () {
-        var webview = webviewFactory.createWebview();
-        spyOn(webkitEvent, "clear");
-        webview.removeAllEventListeners("Created");
-        expect(webkitEvent.clear).toHaveBeenCalledWith({id : webview.id, eventType : "Created"});
-    });
-
     it("can create a webview instance that can remove a single event listener", function () {
         var webview = webviewFactory.createWebview(),
-            identifier = {id: webview.id, eventType : "Created"},
+            eventType = "Created",
             callback = jasmine.createSpy();
         spyOn(webkitEvent, "removeEventListener");
-        webview.removeEventListener("Created", callback);
-        expect(webkitEvent.removeEventListener).toHaveBeenCalledWith(identifier, callback);
+        webview.removeEventListener(eventType, callback);
+        expect(webkitEvent.removeEventListener).toHaveBeenCalledWith(webview.id, eventType, callback);
     });
 
 });
