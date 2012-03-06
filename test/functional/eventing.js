@@ -9,7 +9,7 @@ describe("webviewFactory eventing", function () {
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
-        blackberry = require(srcPath + "webviewFactory");
+        blackberry = require(srcPath + "webview/factory");
     });
 
     it("can create webviews that can listen to system events", function () {

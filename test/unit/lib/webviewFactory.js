@@ -9,7 +9,7 @@ describe("webviewFactory", function () {
 
     beforeEach(function () {
         spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
-        webviewFactory = require(srcPath + "webviewFactory");
+        webviewFactory = require(srcPath + "webview/factory");
     });
 
     it("can create a webview instance", function () {
