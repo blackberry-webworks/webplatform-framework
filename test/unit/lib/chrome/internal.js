@@ -1,7 +1,9 @@
 var srcPath = __dirname + "/../../../../lib/",
     internal,
-    webkitEvent = require(srcPath + "webkitEvent"),
     utils = require(srcPath + "utils"),
+    mockedQnx = require(srcPath + "../test/mockedObjects").mockedQnx,
+    events = require(srcPath + "events"),
+    chrome = require(srcPath + "chrome"),
     eventTypes = [
         'PropertyViewportEvent', 
         'QNXWebDestroyedEvent', 
@@ -44,13 +46,11 @@ var srcPath = __dirname + "/../../../../lib/",
 
 describe("internal", function () {
     
-    var mockedQnx = require(srcPath + "mockedObjects").mockedQnx; 
-
     describe("the webEvent method", function () {
         
         beforeEach(function () {
             spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
-            spyOn(webkitEvent, "emit");
+            spyOn(events, "emit");
             internal = require(srcPath + "chrome/internal");
         });
 
@@ -58,7 +58,7 @@ describe("internal", function () {
             var id = 42,
                 eventType = "Created";
             internal.webEvent(id, eventType);
-            expect(webkitEvent.emit).toHaveBeenCalled();
+            expect(events.emit).toHaveBeenCalled();
         });
 
         it("emits an event with the expected id and eventId", function () {
@@ -66,7 +66,7 @@ describe("internal", function () {
                 inputEventType = "Created",
                 value = "Some value";
             internal.webEvent(inputId, inputEventType, value);
-            expect(webkitEvent.emit).toHaveBeenCalledWith(
+            expect(events.emit).toHaveBeenCalledWith(
                 inputId, inputEventType, [value]);
         });
 
@@ -76,9 +76,9 @@ describe("internal", function () {
                 value = "Welcome to invalid city";
 
             internal.webEvent(id, eventType, value);
-            expect(webkitEvent.emit).not.toHaveBeenCalled();
+            expect(events.emit).not.toHaveBeenCalled();
             expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith(
-                "webview.printToStderr", 1, "Unknown Event: " + 
+                "webview.printToStderr", chrome.id, "Unknown Event: " + 
                 eventType + ":" + value + "\n");
         });
 
@@ -86,7 +86,7 @@ describe("internal", function () {
             var id = 42;
             eventTypes.forEach(function (eventType) {
                 internal.webEvent(id, eventType, eventType);
-                expect(webkitEvent.emit).toHaveBeenCalledWith(
+                expect(events.emit).toHaveBeenCalledWith(
                     id, eventType, [eventType]);
             });
         });

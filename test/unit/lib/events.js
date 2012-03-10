@@ -16,7 +16,7 @@
 var srcPath = __dirname + '/../../../lib/';
 
 describe("event", function () {
-    var event = require(srcPath + 'webkitEvent');
+    var event = require(srcPath + 'events');
     
     describe("the on method", function () {
         afterEach(function () {
