@@ -148,4 +148,19 @@ describe("webview", function () {
         expect(events.removeEventListener).toHaveBeenCalledWith(webview.id, eventType, callback);
     });
 
+    it("can create a webview instance that can have webinspector enabled", function () {
+        var webview = new Webview();
+        webview.enableWebInspector(true);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableWebInspector", webview.id, true);
+        webview.enableWebInspector(false);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableWebInspector", webview.id, false);
+    });
+    
+    it("can create a webview instance that can have crossSite XHR enabled", function () {
+        var webview = new Webview();
+        webview.enableCrossSiteXHR(true);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableCrossSiteXHR", webview.id, true);
+        webview.enableCrossSiteXHR(false);
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableCrossSiteXHR", webview.id, false);
+    });
 });
