@@ -2,3 +2,4 @@ WebPlatform-Framework-webviewfactory
 WebPlatform-Framework
 WebPlatform-Framework-webviewfactory-eventing
 WebPlatform-Framework-webviewfactory-eventFix
+WebPlatform-Framework-request-constants
