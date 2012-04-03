@@ -14,24 +14,16 @@ describe("factory", function () {
         //spyOn(that, "Webview").andCallThrough();
     });
 
-    it("can create a webview instance", function () {
+    it("has a create function", function () {
         expect(blackberry.createWebview()).toBeDefined();
         //expect(Webview).toHaveBeenCalledWith();
     });
 
-    it("stores created webviews for later retrieval", function () {
-        var webview = blackberry.createWebview(),
-            retrievedWebview = blackberry.getWebview(webview.id);
-        expect(retrievedWebview).toBe(webview);
-    });
-
-    it("can get a webview instance for a given id", function () {
-        var webview,
-            desiredId = 42;
-        webview = blackberry.getWebview(desiredId);
+    it("can create a webview instance", function () {
+        var webview = blackberry.createWebview();
         expect(webview).toBeDefined();
         //expect(this.Webview).toHaveBeenCalledWith({webviewId : desiredId});
-        expect(webview.id).toEqual(desiredId);
+        //expect(Webview).toHaveBeenCalledWith();
     });
 
     it("can get a webview instance for the controller", function () {
