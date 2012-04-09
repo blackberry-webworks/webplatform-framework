@@ -56,6 +56,8 @@ function _processFiles() {
 module.exports = function (src, baton) {
     baton.take();
 
+    require('./bundler').bundle();
+
     childProcess.exec(_processFiles(), function (error, stdout, stderr) {
         if (error) {
             console.log(stdout);
