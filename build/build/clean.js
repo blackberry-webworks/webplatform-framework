@@ -19,14 +19,9 @@ var childProcess = require("child_process"),
 
 function _getCmd() {
     if (utils.isWindows()) {
-        return "cmd /c if exist " + _c.DEPLOY + " rd /s /q " + _c.DEPLOY + " && " +
-               "cmd /c if not exist " + _c.TARGET + " md " + _c.TARGET + " && " + 
-               "cmd /c if not exist " + _c.DEPLOY + " md " + _c.DEPLOY;
+        return "cmd /c if exist " + _c.CLIENTFILES + " rd /s /q " + _c.CLIENTFILES;
     } else {
-        return "rm -rf " + _c.DEPLOY + " && " + 
-               "rm -rf " + _c.TARGET + " && " +
-               "mkdir " + _c.TARGET + " && " +
-               "mkdir " + _c.DEPLOY;
+        return "rm -rf " + _c.CLIENTFILES; 
     }
 }
 
