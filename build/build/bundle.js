@@ -17,7 +17,7 @@
 var fs = require('fs'),
     path = require('path');
 
-function bundle () {
+function bundle() {
     var fs = require('fs'),
         files = [
             "lib/utils.js",
@@ -46,7 +46,7 @@ function bundle () {
 
     //include modules
     output += include(files, function (file, path) {
-        return "require.define('" + path.replace(/lib/, "").replace(/\.js$/, "") +
+        return "require.define('" + path.replace(/lib\//, "").replace(/\.js$/, "") +
                                "', function (require, module, exports) {\n" + file + "});\n";
     });
 
@@ -59,7 +59,7 @@ function bundle () {
         fs.mkdirSync(filepath, "0777"); //full permissions
     }
     fs.writeFileSync(filepath + "/webplatform.js", output);
-};
+}
 
 module.exports = function (src, baton) {
     baton.take();
