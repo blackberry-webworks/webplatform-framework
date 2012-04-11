@@ -12,4 +12,4 @@ www/*
 docs/
 dependencies/jsdoc_toolkit-2.4.0/
 dependencies/jsdoc_toolkit-2.4.0.zip
-target/
+/clientFiles/

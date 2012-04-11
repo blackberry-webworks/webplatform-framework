@@ -1,7 +1,6 @@
 var srcPath = __dirname + "/../../../../lib/",
     internal,
-    utils = require(srcPath + "utils"),
-    mockedQnx = require(srcPath + "../test/mockedObjects").mockedQnx,
+    mockedQnx,
     events = require(srcPath + "events"),
     chrome = require(srcPath + "chrome"),
     eventTypes = [
@@ -49,7 +48,8 @@ describe("internal", function () {
     describe("the webEvent method", function () {
         
         beforeEach(function () {
-            spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
+            mockedQnx = { callExtensionMethod : jasmine.createSpy()};
+            GLOBAL.qnx = mockedQnx;
             spyOn(events, "emit");
             internal = require(srcPath + "chrome/internal");
         });

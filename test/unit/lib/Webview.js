@@ -1,16 +1,16 @@
-var srcPath = __dirname + "/../../../../lib/";
+var srcPath = __dirname + "./../../../lib/";
 
 describe("webview", function () {
         
     var Webview,
-        mockedQnx = require(srcPath + "../test/mockedObjects").mockedQnx,
-        utils = require(srcPath + "utils"),
         events = require(srcPath + "events"),
-        chrome = require(srcPath + "chrome");
+        chrome = require(srcPath + "chrome"),
+        mockedQnx;
 
     beforeEach(function () {
-        spyOn(utils, "getQnxNamespace").andReturn(mockedQnx);
-        Webview = require(srcPath + "webview/webview");
+        mockedQnx = {callExtensionMethod : jasmine.createSpy().andReturn(42)}; 
+        GLOBAL.qnx = mockedQnx;
+        Webview = require(srcPath + "Webview");
     });
 
     it("can create a webview instance", function () {

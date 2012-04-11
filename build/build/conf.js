@@ -19,6 +19,7 @@ module.exports = {
     ROOT: path.normalize(__dirname + "/../../"),
     DEPLOY: path.normalize(__dirname + "/../../target/zip/"),
     TARGET: path.normalize(__dirname + "/../../target/"),
+    CLIENTFILES: path.normalize(__dirname + "/../../clientFiles/"),
     BUILD: path.normalize(__dirname + "/.."),
     LIB: path.normalize(__dirname + "/../../lib"),
     BIN: path.normalize(__dirname + "/../../bin"),

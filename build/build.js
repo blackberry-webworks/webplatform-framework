@@ -17,7 +17,7 @@ var childProcess = require("child_process"),
     util = require("util"),
     jWorkflow = require("jWorkflow"),
     clean = require("./build/clean"),
-    pack = require("./build/pack"),
+    bundle = require("./build/bundle"),
     docs = require("./build/docs");
 
 function _done(error) {
@@ -42,7 +42,7 @@ function _handle(func) {
 
 module.exports = _handle(function () {
     var build = jWorkflow.order(clean)
-                         .andThen(pack)
+                         .andThen(bundle)
                          .andThen(docs);
 
     build.start(function (error) {

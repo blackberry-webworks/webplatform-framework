@@ -34,7 +34,7 @@ function _getJSDocCommand() {
         "-jar " + _c.DEPENDENCIES_JSDOC + "jsrun.jar " + 
         _c.DEPENDENCIES_JSDOC + "app/run.js " + 
         "-a " + 
-        "-p " + _c.LIB + 
+        "-r=3 " + _c.LIB + 
         " -t=" + _c.DEPENDENCIES_JSDOC + "templates/jsdoc/ " + 
         "-d=" + _c.DOCS;
     
