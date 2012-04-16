@@ -22,10 +22,20 @@ describe("webview", function () {
     });
 
     it("can create a webview with a specific id", function () {
-        var options = {webviewId : 42},
+        var options = {WebViewId : 42},
             webview = new WebView(options);
         expect(webview.id).toEqual(42);
     });
+    
+    it("can create a webview with a creation callback", function () {
+        var callback = function () {},
+            options = {onCreate : callback},
+            webview;
+        spyOn(events, "on");
+        webview = new WebView(options);
+        expect(events.on).toHaveBeenCalledWith(webview.id, "Created", callback);        
+    });
+    
     
     it("can create a webview instance that can be destroyed", function () {
         var webview = new WebView(),
