@@ -1,6 +1,6 @@
 var srcPath = __dirname + "./../../../lib/";
 
-describe("webview", function () {
+describe("WebView", function () {
         
     var WebView,
         events = require(srcPath + "events"),
@@ -60,7 +60,7 @@ describe("webview", function () {
     });
     
     it("has a READ ONLY originalLocation property", function () {
-        var webview = new Webview(),
+        var webview = new WebView(),
             originalLocation;
         expect(webview.originalLocation).toBeDefined();
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.originalLocation", webview.id);
