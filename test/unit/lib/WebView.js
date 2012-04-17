@@ -1,6 +1,6 @@
 var srcPath = __dirname + "./../../../lib/";
 
-describe("webview", function () {
+describe("WebView", function () {
         
     var WebView,
         events = require(srcPath + "events"),
