@@ -24,7 +24,7 @@ function bundle() {
             "lib/events.js",
             "lib/chrome.js",
             "lib/chrome/internal.js",
-            "lib/Webview.js"
+            "lib/WebView.js"
         ],
         include = function (files, transform) {
             files = files.map ? files : [files];
