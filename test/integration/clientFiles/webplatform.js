@@ -36,6 +36,12 @@ describe("factory", function () {
         expect(webview.id).toEqual(chrome.id);
     });
 
+    it("returns a singleton of the ApplicationWindow", function () {
+        var appWindow = window.qnx.webplatform.getApplicationWindow();
+        expect(appWindow).toBeDefined();
+        expect(window.qnx.webplatform.getApplicationWindow()).toEqual(appWindow);
+    });
+    
     it("can do some basic things", function () {
         var webview,
             callback = function (value, eventId) {

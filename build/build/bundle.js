@@ -24,6 +24,7 @@ function bundle() {
             "lib/events.js",
             "lib/chrome.js",
             "lib/chrome/internal.js",
+            "lib/ApplicationWindow.js",
             "lib/WebView.js"
         ],
         include = function (files, transform) {

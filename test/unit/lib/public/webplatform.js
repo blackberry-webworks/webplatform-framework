@@ -45,4 +45,10 @@ describe("factory", function () {
         expect(webview).toBeDefined();
         expect(webview.id).toEqual(chrome.id);
     });
+
+    it("returns a singleton of the ApplicationWindow", function () {
+        var appWindow = qnx.webplatform.getApplicationWindow();
+        expect(appWindow).toBeDefined();
+        expect(qnx.webplatform.getApplicationWindow()).toEqual(appWindow);
+    });
 });
