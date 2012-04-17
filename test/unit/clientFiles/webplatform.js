@@ -21,11 +21,11 @@ describe("factory", function () {
     });
 
     it("has a create function", function () {
-        expect(window.qnx.webplatform.createWebview()).toBeDefined();
+        expect(window.qnx.webplatform.createWebView()).toBeDefined();
     });
 
     it("can create a webview instance", function () {
-        var webview = window.qnx.webplatform.createWebview();
+        var webview = window.qnx.webplatform.createWebView();
         expect(webview).toBeDefined();
     });
 
