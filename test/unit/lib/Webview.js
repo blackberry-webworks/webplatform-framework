@@ -36,7 +36,6 @@ describe("webview", function () {
         expect(events.clear).toHaveBeenCalledWith(webviewId);
     });
    
-   
     it("can create a webview instance that can set a url", function () {
         var webview = new Webview(),
             url = "http://www.google.com";
@@ -50,6 +49,16 @@ describe("webview", function () {
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.location", webview.id);
     });
     
+    it("has a READ ONLY originalLocation property", function () {
+        var webview = new Webview(),
+            originalLocation;
+        expect(webview.originalLocation).toBeDefined();
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.originalLocation", webview.id);
+        originalLocation = webview.originalLocation;
+        webview.originalLocation = "http://www.google.com";
+        expect(webview.originalLocation).toEqual(originalLocation);
+    });
+
     it("can create a webview instance that can execute javascript", function () {
         var webview = new Webview(),
             jsExpression = "var a = 'awesome';";
