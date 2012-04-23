@@ -167,19 +167,31 @@ describe("WebView", function () {
         expect(events.removeEventListener).toHaveBeenCalledWith(webview.id, eventType, callback);
     });
 
+    it("can create a webview instance that can retrieve current webInspector value", function () {
+        var webview = new WebView(),
+            currentStatus = webview.enableWebInspector;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.isEnableWebInspector", webview.id);
+    });
+
     it("can create a webview instance that can have webinspector enabled", function () {
         var webview = new WebView();
-        webview.enableWebInspector(true);
+        webview.enableWebInspector=true;
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableWebInspector", webview.id, true);
-        webview.enableWebInspector(false);
+        webview.enableWebInspector=false;
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableWebInspector", webview.id, false);
     });
     
+    it("can create a webview instance that can retrieve current crossSite XHR value", function () {
+        var webview = new WebView(),
+            currentStatus = webview.enableCrossSiteXHR;
+        expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.isEnableCrossSiteXHR", webview.id);
+    });
+
     it("can create a webview instance that can have crossSite XHR enabled", function () {
         var webview = new WebView();
-        webview.enableCrossSiteXHR(true);
+        webview.enableCrossSiteXHR=true;
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableCrossSiteXHR", webview.id, true);
-        webview.enableCrossSiteXHR(false);
+        webview.enableCrossSiteXHR=false;
         expect(mockedQnx.callExtensionMethod).toHaveBeenCalledWith("webview.setEnableCrossSiteXHR", webview.id, false);
     });
 });
