@@ -17,7 +17,7 @@
         "window",
         "module",
         "escape",
-        "global",
+        "global", "GLOBAL",
         "unescape",
         "document",
         "setTimeout",
@@ -30,7 +30,7 @@
         "qnx", "chrome", "NamedNodeMap"
     ],
 
-    "node" : true,
+    "node" : false,
     "es5" : true,
     "browser" : true,
 
@@ -39,7 +39,7 @@
     "bitwise" : true,
     "white": true,
     "indent": 4,
-    "evil": false,
+    "evil": true,
     "devel": true,
     "debug": false,
     "eqeqeq": true,

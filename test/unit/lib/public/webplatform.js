@@ -10,7 +10,6 @@ describe("factory", function () {
         require = function (id) {
             return _r(libPath + id);
         };
-        GLOBAL.window = {chrome : {internal : {}}};
         GLOBAL.qnx = {callExtensionMethod : jasmine.createSpy().andReturn(42)};
         eval(webplatform);
 
