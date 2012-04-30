@@ -33,17 +33,16 @@ function _done(error) {
 function _handle(func) {
     return function () {
         try {
-            func.apply(func, Array.prototype.slice.call(arguments));
+            func.apply(func, Array.prototype.slice.call(process.argv, 3));
         } catch (e) {
             _done(e.message + "\n" + e.stack);
         }
     };
 }
 
-module.exports = _handle(function () {
+module.exports = _handle(function (buildDestination) {
     var build = jWorkflow.order(clean)
-                         .andThen(bundle)
-                         .andThen(docs);
+                         .andThen(bundle, {dest: buildDestination});
 
     build.start(function (error) {
         _done(error);

@@ -17,7 +17,7 @@
 var fs = require('fs'),
     path = require('path');
 
-function bundle() {
+function bundle(dest) {
     var fs = require('fs'),
         files = [
             "lib/utils.js",
@@ -55,7 +55,7 @@ function bundle() {
     output += include("lib/public/webplatform.js");
 
     //create output folder if it doesn't exist
-    filepath = __dirname.replace(/\\/g, '/') + "/../../clientFiles";
+    filepath = !!dest ? dest :  __dirname.replace(/\\/g, '/') + "/../../clientFiles";
     if (!path.existsSync(filepath)) {
         fs.mkdirSync(filepath, "0777"); //full permissions
     }
@@ -64,6 +64,6 @@ function bundle() {
 
 module.exports = function (src, baton) {
     baton.take();
-    bundle();
+    bundle(this.dest);
     baton.pass(src);
 };

@@ -19,7 +19,7 @@ task('default', [], require('./build/build'));
 
 task('configure', [], require('./build/configure'));
 
-desc("packages the framework and builds the docs - jake build");
+desc("packages the framework outputting to clientFiles by default or to the provided path - jake build [outputPath]");
 task('build', [], require('./build/build'));
 
 desc("just builds the docs - jake docs");
